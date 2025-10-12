@@ -1,0 +1,22 @@
+/* add Tailwind v4 semantic tokens to fix `border-border` and define brand palette */
+@theme inline {
+  /* fonts */
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-cormorant);
+
+  /* radius */
+  --radius: 0.5rem;
+
+  /* colors (5 total) */
+  --color-background: #f7f5f0; /* Ivory */
+  --color-foreground: #111418; /* Deep Charcoal */
+  --color-border: #e2dfd6; /* Subtle warm gray for borders */
+  --color-muted: #eae7de; /* Light warm neutral */
+  --color-muted-foreground: #6b6f76; /* Warm Gray for secondary text */
+
+  --color-primary: #c3a76a; /* Antique Gold */
+  --color-primary-foreground: #111418; /* Contrast over gold */
+
+  --color-accent: #1f3a33; /* Forest Green accent */
+  --color-accent-foreground: #f7f5f0; /* Contrast over green */
+}
