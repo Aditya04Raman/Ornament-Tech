@@ -1,0 +1,685 @@
+{
+  "training_pairs": [
+    [
+      "What is Ornament Tech?",
+      "Ornament Tech is luxury jewelry boutique specializing in bespoke jewelry creation We specialize in bespoke jewellery with editorial presentation and an AI concierge."
+    ],
+    [
+      "Tell me about your company",
+      "We are Ornament Tech with 15+ years of experience. We've created 1200+ pieces created for 500+ happy customers."
+    ],
+    [
+      "What are your values?",
+      "Our core values are Artistry, Partnership, Sustainability. These guide everything we do in creating exceptional jewelry."
+    ],
+    [
+      "How long have you been in business?",
+      "We have 15+ years of experience in bespoke jewelry creation."
+    ],
+    [
+      "How many customers have you served?",
+      "We've proudly served 500+ happy customers and created 1200+ pieces created."
+    ],
+    [
+      "How does the bespoke process work?",
+      "From concept to creation, a guided journey tailored to you Our process has 4 main steps: Consultation, Design, Craft, and Delivery."
+    ],
+    [
+      "How long does the bespoke process take?",
+      "The bespoke process 4-8 weeks depending on complexity."
+    ],
+    [
+      "What happens in the consultation?",
+      "Step 1 - Consultation: Share your vision and story with our designers. We'll discuss your budget, timeline, and unique inspirations to create the perfect foundation for your piece."
+    ],
+    [
+      "Tell me about the design phase",
+      "Step 2 - Design: Watch your dreams take shape through hand-drawn sketches and 3D CAD models. We'll refine every detail together until the design is perfect."
+    ],
+    [
+      "How is my jewelry crafted?",
+      "Step 3 - Craft: Our master craftspeople bring your design to life using traditional techniques and modern precision. Every piece is handmade with exceptional attention to detail."
+    ],
+    [
+      "When will I receive my jewelry?",
+      "Step 4 - Delivery: Your completed masterpiece undergoes rigorous quality checks before being presented in our signature packaging. The moment you've been waiting for."
+    ],
+    [
+      "Tell me about Engagement Rings",
+      "Engagement Rings: Solitaire classics, vintage-inspired halos, and completely custom designs to mark your unique love story. We have 50+ designs available, starting From £2,500."
+    ],
+    [
+      "What engagement rings do you have?",
+      "Our Engagement Rings collection includes Solitaire, Halo, Trilogy, Custom designs. Solitaire classics, vintage-inspired halos, and completely custom designs to mark your unique love story."
+    ],
+    [
+      "How much for engagement rings?",
+      "Engagement Rings start From £2,500. Prices vary based on materials and complexity."
+    ],
+    [
+      "Tell me about Wedding Bands",
+      "Wedding Bands: Perfectly paired bands in classic, textured, and shaped styles. Each designed to complement your engagement ring. We have 40+ designs available, starting From £800."
+    ],
+    [
+      "What wedding bands do you have?",
+      "Our Wedding Bands collection includes Classic, Shaped, Textured, Bespoke fits. Perfectly paired bands in classic, textured, and shaped styles. Each designed to complement your engagement ring."
+    ],
+    [
+      "How much for wedding bands?",
+      "Wedding Bands start From £800. Prices vary based on materials and complexity."
+    ],
+    [
+      "Tell me about Necklaces",
+      "Necklaces: Delicate pendants to statement pieces, each featuring carefully selected gemstones and precious metals. We have 35+ designs available, starting From £1,200."
+    ],
+    [
+      "What necklaces do you have?",
+      "Our Necklaces collection includes Pendants, Statement designs, Precious stones. Delicate pendants to statement pieces, each featuring carefully selected gemstones and precious metals."
+    ],
+    [
+      "How much for necklaces?",
+      "Necklaces start From £1,200. Prices vary based on materials and complexity."
+    ],
+    [
+      "Tell me about Earrings",
+      "Earrings: From elegant studs for everyday wear to dramatic drops for special occasions, crafted with precision. We have 45+ designs available, starting From £600."
+    ],
+    [
+      "What earrings do you have?",
+      "Our Earrings collection includes Studs, Hoops, Drops, Precious metals. From elegant studs for everyday wear to dramatic drops for special occasions, crafted with precision."
+    ],
+    [
+      "How much for earrings?",
+      "Earrings start From £600. Prices vary based on materials and complexity."
+    ],
+    [
+      "Tell me about Bridal Collection",
+      "Bridal Collection: Complete bridal sets designed to complement each other perfectly for your special day. We have 25+ sets available, starting From £3,500."
+    ],
+    [
+      "What bridal collection do you have?",
+      "Our Bridal Collection collection includes . Complete bridal sets designed to complement each other perfectly for your special day."
+    ],
+    [
+      "How much for bridal collection?",
+      "Bridal Collection start From £3,500. Prices vary based on materials and complexity."
+    ],
+    [
+      "Tell me about Heritage Collection",
+      "Heritage Collection: Timeless pieces inspired by classical designs, updated with contemporary craftsmanship. We have 30+ designs available, starting From £1,800."
+    ],
+    [
+      "What heritage collection do you have?",
+      "Our Heritage Collection collection includes . Timeless pieces inspired by classical designs, updated with contemporary craftsmanship."
+    ],
+    [
+      "How much for heritage collection?",
+      "Heritage Collection start From £1,800. Prices vary based on materials and complexity."
+    ],
+    [
+      "Tell me about Platinum",
+      "Platinum: The ultimate choice for luxury jewelry. Naturally white, hypoallergenic, and incredibly durable. Platinum develops a beautiful patina over time while maintaining its strength. Key properties: Hypoallergenic, Naturally White, Extremely Durable, Develops Patina."
+    ],
+    [
+      "What are the benefits of Platinum?",
+      "Platinum offers Hypoallergenic, Naturally White, Extremely Durable, Develops Patina. It's best for Engagement rings, daily wear."
+    ],
+    [
+      "How durable is Platinum?",
+      "Platinum has Highest durability and requires Minimal maintenance."
+    ],
+    [
+      "Tell me about 18K Yellow Gold",
+      "18K Yellow Gold: Classic and timeless with a warm, rich hue. Perfect balance of purity and durability, making it ideal for everyday wear and heirloom pieces. Key properties: Classic Beauty, Excellent Durability, Warm Tone, Traditional Choice."
+    ],
+    [
+      "What are the benefits of 18K Yellow Gold?",
+      "18K Yellow Gold offers Classic Beauty, Excellent Durability, Warm Tone, Traditional Choice. It's best for Classic pieces, heirlooms."
+    ],
+    [
+      "How durable is 18K Yellow Gold?",
+      "18K Yellow Gold has High durability and requires Low maintenance."
+    ],
+    [
+      "Tell me about 18K White Gold",
+      "18K White Gold: Contemporary elegance with a bright, silvery finish. Rhodium-plated for extra brilliance, though periodic re-plating may be recommended. Key properties: Modern Appeal, Rhodium Finished, Bright Appearance, Versatile Choice."
+    ],
+    [
+      "What are the benefits of 18K White Gold?",
+      "18K White Gold offers Modern Appeal, Rhodium Finished, Bright Appearance, Versatile Choice. It's best for Modern designs, versatility."
+    ],
+    [
+      "How durable is 18K White Gold?",
+      "18K White Gold has High durability and requires Moderate maintenance."
+    ],
+    [
+      "Tell me about 18K Rose Gold",
+      "18K Rose Gold: Romantic and distinctive with its beautiful blush tone created by copper alloys. Increasingly popular for its unique warmth and vintage appeal. Key properties: Romantic Tone, Unique Character, Vintage Appeal, Growing Popularity."
+    ],
+    [
+      "What are the benefits of 18K Rose Gold?",
+      "18K Rose Gold offers Romantic Tone, Unique Character, Vintage Appeal, Growing Popularity. It's best for Romantic pieces, vintage styles."
+    ],
+    [
+      "How durable is 18K Rose Gold?",
+      "18K Rose Gold has High durability and requires Low maintenance."
+    ],
+    [
+      "Tell me about Diamonds",
+      "Diamonds: Understand the 4Cs: cut, color, clarity, carat. The most precious and durable gemstone. Key characteristics: 4Cs evaluation, Exceptional hardness, Brilliant fire, Timeless appeal."
+    ],
+    [
+      "What makes Diamonds special?",
+      "Diamonds are valued for 4Cs evaluation, Exceptional hardness, Brilliant fire, Timeless appeal."
+    ],
+    [
+      "Tell me about Sapphires",
+      "Sapphires: Durable corundum in a range of colors. Second only to diamonds in hardness. Key characteristics: Available in many colors, Excellent durability, Royal heritage, Symbolic meaning."
+    ],
+    [
+      "What makes Sapphires special?",
+      "Sapphires are valued for Available in many colors, Excellent durability, Royal heritage, Symbolic meaning."
+    ],
+    [
+      "Tell me about Emeralds",
+      "Emeralds: Vibrant green beryl with unique inclusions that add character and authenticity. Key characteristics: Vivid green color, Natural inclusions, Requires gentle care, Historic significance."
+    ],
+    [
+      "What makes Emeralds special?",
+      "Emeralds are valued for Vivid green color, Natural inclusions, Requires gentle care, Historic significance."
+    ],
+    [
+      "Tell me about Rubies",
+      "Rubies: Rich red corundum prized for its intensity and passion. Key characteristics: Intense red color, Excellent hardness, Symbol of love, Rare and valuable."
+    ],
+    [
+      "What makes Rubies special?",
+      "Rubies are valued for Intense red color, Excellent hardness, Symbol of love, Rare and valuable."
+    ],
+    [
+      "How do I book a consultation?",
+      "You can book a In-Person Consultation, Virtual Video Call, Phone Consultation. We offer Free consultation and typical sessions last 60-90 minutes."
+    ],
+    [
+      "Where are your locations?",
+      "We have locations in London Studio, Cambridge Boutique. Our main studio is in 69 Regent's Park Road, Primrose Hill, London NW1 8UY."
+    ],
+    [
+      "Do you offer virtual consultations?",
+      "Yes! We offer In-Person Consultation, Virtual Video Call, Phone Consultation. Virtual consultations are a great way to start your bespoke journey from anywhere."
+    ],
+    [
+      "What should I expect in a consultation?",
+      "During your consultation: Discovery session to understand your vision Design exploration and material selection Detailed proposal with timeline and pricing."
+    ],
+    [
+      "What are your prices?",
+      "Our prices vary by collection: Engagement rings from £2,500, Wedding bands from £800, Necklaces from £1,200, Earrings from £600. We work with all budgets."
+    ],
+    [
+      "Do you offer payment plans?",
+      "Yes, we offer Full payment, Payment plans, Deposit system, Financing available to make your dream piece more accessible."
+    ],
+    [
+      "Is there a consultation fee?",
+      "No, we offer Free consultation. All initial consultations are complimentary."
+    ],
+    [
+      "What are typical lead times?",
+      "Bespoke projects typically take 4–8 weeks depending on complexity. Simple modifications may take 2-3 weeks, while completely custom pieces with rare gemstones can take up to 12 weeks."
+    ],
+    [
+      "Do you resize rings?",
+      "Yes, we offer comprehensive resizing services. Most rings can be resized up or down by 2-3 sizes. Complex designs with intricate details may have limitations, which we'll discuss during consultation."
+    ],
+    [
+      "What's a typical budget for bespoke jewelry?",
+      "Budgets vary widely based on materials and design complexity. Engagement rings start from £2,500, while elaborate custom pieces can range from £5,000 to £50,000+. We work with all budgets to create something special."
+    ],
+    [
+      "Do you provide certificates for gemstones?",
+      "Yes, all our diamonds come with GIA or similar certification. Colored gemstones receive appropriate certifications from recognized gemological laboratories."
+    ],
+    [
+      "What is your return policy?",
+      "Bespoke pieces are custom-made for you and generally cannot be returned. However, we offer unlimited revisions during the design phase and a satisfaction guarantee on craftsmanship."
+    ],
+    [
+      "How can I contact you?",
+      "You can reach us at hello@ornamenttech.com, call +44 20 8154 9500, or use our WhatsApp. We respond within 24 hours."
+    ],
+    [
+      "What are your hours?",
+      "We're available Monday to Saturday, 9 AM to 6 PM. You can also reach us anytime through our AI concierge."
+    ],
+    [
+      "Do you have social media?",
+      "Yes! Follow us on Instagram @ornamenttech, Facebook OrnamentTech, and Pinterest OrnamentTech."
+    ],
+    [
+      "How do I care for my jewelry?",
+      "Clean gently with warm water and mild soap. Store in individual pouches to prevent scratching. We recommend annual professional check-ups."
+    ],
+    [
+      "Do you offer repairs?",
+      "Yes, we offer comprehensive repair services, resizing, cleaning, and maintenance. We provide a lifetime guarantee on our craftsmanship."
+    ],
+    [
+      "Can you resize my ring?",
+      "Yes, we offer resizing services. Most rings can be resized up or down by 2-3 sizes, though complex designs may have limitations."
+    ],
+    [
+      "Could you explain tell me about diamonds",
+      "Diamonds: Understand the 4Cs: cut, color, clarity, carat. The most precious and durable gemstone. Key characteristics: 4Cs evaluation, Exceptional hardness, Brilliant fire, Timeless appeal."
+    ],
+    [
+      "Hey, what makes diamonds special?",
+      "Diamonds are valued for 4Cs evaluation, Exceptional hardness, Brilliant fire, Timeless appeal."
+    ],
+    [
+      "Good afternoon, what necklaces do you have?",
+      "Our Necklaces collection includes Pendants, Statement designs, Precious stones. Delicate pendants to statement pieces, each featuring carefully selected gemstones and precious metals."
+    ],
+    [
+      "Could you explain how much for engagement rings?",
+      "Engagement Rings start From £2,500. Prices vary based on materials and complexity."
+    ],
+    [
+      "I'd like to know what wedding bands do you have?",
+      "Our Wedding Bands collection includes Classic, Shaped, Textured, Bespoke fits. Perfectly paired bands in classic, textured, and shaped styles. Each designed to complement your engagement ring."
+    ],
+    [
+      "I'd like to know tell me about diamonds",
+      "Diamonds: Understand the 4Cs: cut, color, clarity, carat. The most precious and durable gemstone. Key characteristics: 4Cs evaluation, Exceptional hardness, Brilliant fire, Timeless appeal."
+    ],
+    [
+      "I'd like to know tell me about heritage collection",
+      "Heritage Collection: Timeless pieces inspired by classical designs, updated with contemporary craftsmanship. We have 30+ designs available, starting From £1,800."
+    ],
+    [
+      "Hey, how long have you been in business?",
+      "We have 15+ years of experience in bespoke jewelry creation."
+    ],
+    [
+      "Hello, how durable is 18k rose gold?",
+      "18K Rose Gold has High durability and requires Low maintenance."
+    ],
+    [
+      "Can you tell me how long does the bespoke process take?",
+      "The bespoke process 4-8 weeks depending on complexity."
+    ],
+    [
+      "Could you explain what makes emeralds special?",
+      "Emeralds are valued for Vivid green color, Natural inclusions, Requires gentle care, Historic significance."
+    ],
+    [
+      "Could you explain tell me about your company",
+      "We are Ornament Tech with 15+ years of experience. We've created 1200+ pieces created for 500+ happy customers."
+    ],
+    [
+      "I'd like to know what are the benefits of 18k white gold?",
+      "18K White Gold offers Modern Appeal, Rhodium Finished, Bright Appearance, Versatile Choice. It's best for Modern designs, versatility."
+    ],
+    [
+      "Hey, tell me about rubies",
+      "Rubies: Rich red corundum prized for its intensity and passion. Key characteristics: Intense red color, Excellent hardness, Symbol of love, Rare and valuable."
+    ],
+    [
+      "Hey, how long does the bespoke process take?",
+      "The bespoke process 4-8 weeks depending on complexity."
+    ],
+    [
+      "Good morning, what happens in the consultation?",
+      "Step 1 - Consultation: Share your vision and story with our designers. We'll discuss your budget, timeline, and unique inspirations to create the perfect foundation for your piece."
+    ],
+    [
+      "Can you tell me how many customers have you served?",
+      "We've proudly served 500+ happy customers and created 1200+ pieces created."
+    ],
+    [
+      "Hello, what's a typical budget for bespoke jewelry?",
+      "Budgets vary widely based on materials and design complexity. Engagement rings start from £2,500, while elaborate custom pieces can range from £5,000 to £50,000+. We work with all budgets to create something special."
+    ],
+    [
+      "Can you tell me tell me about 18k yellow gold",
+      "18K Yellow Gold: Classic and timeless with a warm, rich hue. Perfect balance of purity and durability, making it ideal for everyday wear and heirloom pieces. Key properties: Classic Beauty, Excellent Durability, Warm Tone, Traditional Choice."
+    ],
+    [
+      "Good morning, tell me about the design phase",
+      "Step 2 - Design: Watch your dreams take shape through hand-drawn sketches and 3D CAD models. We'll refine every detail together until the design is perfect."
+    ],
+    [
+      "Hello, what is your return policy?",
+      "Bespoke pieces are custom-made for you and generally cannot be returned. However, we offer unlimited revisions during the design phase and a satisfaction guarantee on craftsmanship."
+    ],
+    [
+      "Can you tell me how much for necklaces?",
+      "Necklaces start From £1,200. Prices vary based on materials and complexity."
+    ],
+    [
+      "Hello, what earrings do you have?",
+      "Our Earrings collection includes Studs, Hoops, Drops, Precious metals. From elegant studs for everyday wear to dramatic drops for special occasions, crafted with precision."
+    ],
+    [
+      "Good morning, what engagement rings do you have?",
+      "Our Engagement Rings collection includes Solitaire, Halo, Trilogy, Custom designs. Solitaire classics, vintage-inspired halos, and completely custom designs to mark your unique love story."
+    ],
+    [
+      "I'm interested in how durable is 18k white gold?",
+      "18K White Gold has High durability and requires Moderate maintenance."
+    ],
+    [
+      "Good morning, tell me about platinum",
+      "Platinum: The ultimate choice for luxury jewelry. Naturally white, hypoallergenic, and incredibly durable. Platinum develops a beautiful patina over time while maintaining its strength. Key properties: Hypoallergenic, Naturally White, Extremely Durable, Develops Patina."
+    ],
+    [
+      "Good morning, what is ornament tech?",
+      "Ornament Tech is luxury jewelry boutique specializing in bespoke jewelry creation We specialize in bespoke jewellery with editorial presentation and an AI concierge."
+    ],
+    [
+      "Hi, can you resize my ring?",
+      "Yes, we offer resizing services. Most rings can be resized up or down by 2-3 sizes, though complex designs may have limitations."
+    ],
+    [
+      "Hello, how durable is 18k white gold?",
+      "18K White Gold has High durability and requires Moderate maintenance."
+    ],
+    [
+      "Hey, when will i receive my jewelry?",
+      "Step 4 - Delivery: Your completed masterpiece undergoes rigorous quality checks before being presented in our signature packaging. The moment you've been waiting for."
+    ],
+    [
+      "I'd like to know what engagement rings do you have?",
+      "Our Engagement Rings collection includes Solitaire, Halo, Trilogy, Custom designs. Solitaire classics, vintage-inspired halos, and completely custom designs to mark your unique love story."
+    ],
+    [
+      "Hi, what is ornament tech?",
+      "Ornament Tech is luxury jewelry boutique specializing in bespoke jewelry creation We specialize in bespoke jewellery with editorial presentation and an AI concierge."
+    ],
+    [
+      "Good afternoon, tell me about 18k yellow gold",
+      "18K Yellow Gold: Classic and timeless with a warm, rich hue. Perfect balance of purity and durability, making it ideal for everyday wear and heirloom pieces. Key properties: Classic Beauty, Excellent Durability, Warm Tone, Traditional Choice."
+    ],
+    [
+      "Could you explain what are the benefits of platinum?",
+      "Platinum offers Hypoallergenic, Naturally White, Extremely Durable, Develops Patina. It's best for Engagement rings, daily wear."
+    ],
+    [
+      "Good morning, what earrings do you have?",
+      "Our Earrings collection includes Studs, Hoops, Drops, Precious metals. From elegant studs for everyday wear to dramatic drops for special occasions, crafted with precision."
+    ],
+    [
+      "I'm interested in what are your hours?",
+      "We're available Monday to Saturday, 9 AM to 6 PM. You can also reach us anytime through our AI concierge."
+    ],
+    [
+      "Good afternoon, what makes rubies special?",
+      "Rubies are valued for Intense red color, Excellent hardness, Symbol of love, Rare and valuable."
+    ],
+    [
+      "Could you explain what bridal collection do you have?",
+      "Our Bridal Collection collection includes . Complete bridal sets designed to complement each other perfectly for your special day."
+    ],
+    [
+      "I'm interested in what wedding bands do you have?",
+      "Our Wedding Bands collection includes Classic, Shaped, Textured, Bespoke fits. Perfectly paired bands in classic, textured, and shaped styles. Each designed to complement your engagement ring."
+    ],
+    [
+      "Hi, tell me about emeralds",
+      "Emeralds: Vibrant green beryl with unique inclusions that add character and authenticity. Key characteristics: Vivid green color, Natural inclusions, Requires gentle care, Historic significance."
+    ],
+    [
+      "I'm interested in how durable is 18k yellow gold?",
+      "18K Yellow Gold has High durability and requires Low maintenance."
+    ],
+    [
+      "Good morning, what are the benefits of 18k rose gold?",
+      "18K Rose Gold offers Romantic Tone, Unique Character, Vintage Appeal, Growing Popularity. It's best for Romantic pieces, vintage styles."
+    ],
+    [
+      "Hi, tell me about 18k yellow gold",
+      "18K Yellow Gold: Classic and timeless with a warm, rich hue. Perfect balance of purity and durability, making it ideal for everyday wear and heirloom pieces. Key properties: Classic Beauty, Excellent Durability, Warm Tone, Traditional Choice."
+    ],
+    [
+      "Could you explain tell me about bridal collection",
+      "Bridal Collection: Complete bridal sets designed to complement each other perfectly for your special day. We have 25+ sets available, starting From £3,500."
+    ],
+    [
+      "Hey, what are your hours?",
+      "We're available Monday to Saturday, 9 AM to 6 PM. You can also reach us anytime through our AI concierge."
+    ],
+    [
+      "I'm interested in what are the benefits of 18k white gold?",
+      "18K White Gold offers Modern Appeal, Rhodium Finished, Bright Appearance, Versatile Choice. It's best for Modern designs, versatility."
+    ],
+    [
+      "I'm interested in what is ornament tech?",
+      "Ornament Tech is luxury jewelry boutique specializing in bespoke jewelry creation We specialize in bespoke jewellery with editorial presentation and an AI concierge."
+    ],
+    [
+      "I'm interested in how much for necklaces?",
+      "Necklaces start From £1,200. Prices vary based on materials and complexity."
+    ],
+    [
+      "Can you tell me what is your return policy?",
+      "Bespoke pieces are custom-made for you and generally cannot be returned. However, we offer unlimited revisions during the design phase and a satisfaction guarantee on craftsmanship."
+    ],
+    [
+      "Can you tell me what necklaces do you have?",
+      "Our Necklaces collection includes Pendants, Statement designs, Precious stones. Delicate pendants to statement pieces, each featuring carefully selected gemstones and precious metals."
+    ],
+    [
+      "Could you explain what heritage collection do you have?",
+      "Our Heritage Collection collection includes . Timeless pieces inspired by classical designs, updated with contemporary craftsmanship."
+    ],
+    [
+      "Hello, how much for heritage collection?",
+      "Heritage Collection start From £1,800. Prices vary based on materials and complexity."
+    ],
+    [
+      "Hello, what are typical lead times?",
+      "Bespoke projects typically take 4–8 weeks depending on complexity. Simple modifications may take 2-3 weeks, while completely custom pieces with rare gemstones can take up to 12 weeks."
+    ],
+    [
+      "I'd like to know tell me about engagement rings",
+      "Engagement Rings: Solitaire classics, vintage-inspired halos, and completely custom designs to mark your unique love story. We have 50+ designs available, starting From £2,500."
+    ],
+    [
+      "I'm interested in what happens in the consultation?",
+      "Step 1 - Consultation: Share your vision and story with our designers. We'll discuss your budget, timeline, and unique inspirations to create the perfect foundation for your piece."
+    ],
+    [
+      "Can you tell me what makes diamonds special?",
+      "Diamonds are valued for 4Cs evaluation, Exceptional hardness, Brilliant fire, Timeless appeal."
+    ],
+    [
+      "Good afternoon, how long have you been in business?",
+      "We have 15+ years of experience in bespoke jewelry creation."
+    ],
+    [
+      "I'd like to know what are typical lead times?",
+      "Bespoke projects typically take 4–8 weeks depending on complexity. Simple modifications may take 2-3 weeks, while completely custom pieces with rare gemstones can take up to 12 weeks."
+    ],
+    [
+      "Could you explain what makes diamonds special?",
+      "Diamonds are valued for 4Cs evaluation, Exceptional hardness, Brilliant fire, Timeless appeal."
+    ],
+    [
+      "Hey, what is your return policy?",
+      "Bespoke pieces are custom-made for you and generally cannot be returned. However, we offer unlimited revisions during the design phase and a satisfaction guarantee on craftsmanship."
+    ],
+    [
+      "Good afternoon, how do i book a consultation?",
+      "You can book a In-Person Consultation, Virtual Video Call, Phone Consultation. We offer Free consultation and typical sessions last 60-90 minutes."
+    ],
+    [
+      "Can you tell me how much for bridal collection?",
+      "Bridal Collection start From £3,500. Prices vary based on materials and complexity."
+    ],
+    [
+      "Good afternoon, tell me about 18k rose gold",
+      "18K Rose Gold: Romantic and distinctive with its beautiful blush tone created by copper alloys. Increasingly popular for its unique warmth and vintage appeal. Key properties: Romantic Tone, Unique Character, Vintage Appeal, Growing Popularity."
+    ],
+    [
+      "Good morning, how much for engagement rings?",
+      "Engagement Rings start From £2,500. Prices vary based on materials and complexity."
+    ],
+    [
+      "Could you explain how many customers have you served?",
+      "We've proudly served 500+ happy customers and created 1200+ pieces created."
+    ],
+    [
+      "I'm interested in what are your prices?",
+      "Our prices vary by collection: Engagement rings from £2,500, Wedding bands from £800, Necklaces from £1,200, Earrings from £600. We work with all budgets."
+    ],
+    [
+      "Good afternoon, how do i care for my jewelry?",
+      "Clean gently with warm water and mild soap. Store in individual pouches to prevent scratching. We recommend annual professional check-ups."
+    ],
+    [
+      "Good afternoon, what are the benefits of platinum?",
+      "Platinum offers Hypoallergenic, Naturally White, Extremely Durable, Develops Patina. It's best for Engagement rings, daily wear."
+    ],
+    [
+      "Could you explain how can i contact you?",
+      "You can reach us at hello@ornamenttech.com, call +44 20 8154 9500, or use our WhatsApp. We respond within 24 hours."
+    ],
+    [
+      "Good morning, is there a consultation fee?",
+      "No, we offer Free consultation. All initial consultations are complimentary."
+    ],
+    [
+      "Could you explain tell me about 18k rose gold",
+      "18K Rose Gold: Romantic and distinctive with its beautiful blush tone created by copper alloys. Increasingly popular for its unique warmth and vintage appeal. Key properties: Romantic Tone, Unique Character, Vintage Appeal, Growing Popularity."
+    ],
+    [
+      "Good afternoon, what are your values?",
+      "Our core values are Artistry, Partnership, Sustainability. These guide everything we do in creating exceptional jewelry."
+    ],
+    [
+      "Hi, what are the benefits of 18k yellow gold?",
+      "18K Yellow Gold offers Classic Beauty, Excellent Durability, Warm Tone, Traditional Choice. It's best for Classic pieces, heirlooms."
+    ],
+    [
+      "Can you tell me tell me about the design phase",
+      "Step 2 - Design: Watch your dreams take shape through hand-drawn sketches and 3D CAD models. We'll refine every detail together until the design is perfect."
+    ],
+    [
+      "Hi, how much for wedding bands?",
+      "Wedding Bands start From £800. Prices vary based on materials and complexity."
+    ],
+    [
+      "I'm interested in how much for engagement rings?",
+      "Engagement Rings start From £2,500. Prices vary based on materials and complexity."
+    ],
+    [
+      "Good morning, tell me about heritage collection",
+      "Heritage Collection: Timeless pieces inspired by classical designs, updated with contemporary craftsmanship. We have 30+ designs available, starting From £1,800."
+    ],
+    [
+      "Can you tell me what wedding bands do you have?",
+      "Our Wedding Bands collection includes Classic, Shaped, Textured, Bespoke fits. Perfectly paired bands in classic, textured, and shaped styles. Each designed to complement your engagement ring."
+    ],
+    [
+      "Good afternoon, what heritage collection do you have?",
+      "Our Heritage Collection collection includes . Timeless pieces inspired by classical designs, updated with contemporary craftsmanship."
+    ],
+    [
+      "Good afternoon, can you resize my ring?",
+      "Yes, we offer resizing services. Most rings can be resized up or down by 2-3 sizes, though complex designs may have limitations."
+    ],
+    [
+      "Hello, do you offer virtual consultations?",
+      "Yes! We offer In-Person Consultation, Virtual Video Call, Phone Consultation. Virtual consultations are a great way to start your bespoke journey from anywhere."
+    ],
+    [
+      "Could you explain what engagement rings do you have?",
+      "Our Engagement Rings collection includes Solitaire, Halo, Trilogy, Custom designs. Solitaire classics, vintage-inspired halos, and completely custom designs to mark your unique love story."
+    ],
+    [
+      "I'd like to know what makes rubies special?",
+      "Rubies are valued for Intense red color, Excellent hardness, Symbol of love, Rare and valuable."
+    ],
+    [
+      "Good morning, can you resize my ring?",
+      "Yes, we offer resizing services. Most rings can be resized up or down by 2-3 sizes, though complex designs may have limitations."
+    ],
+    [
+      "Hello, tell me about the design phase",
+      "Step 2 - Design: Watch your dreams take shape through hand-drawn sketches and 3D CAD models. We'll refine every detail together until the design is perfect."
+    ],
+    [
+      "Can you tell me what happens in the consultation?",
+      "Step 1 - Consultation: Share your vision and story with our designers. We'll discuss your budget, timeline, and unique inspirations to create the perfect foundation for your piece."
+    ],
+    [
+      "I'm interested in how many customers have you served?",
+      "We've proudly served 500+ happy customers and created 1200+ pieces created."
+    ],
+    [
+      "Could you explain how much for wedding bands?",
+      "Wedding Bands start From £800. Prices vary based on materials and complexity."
+    ],
+    [
+      "Hey, what are the benefits of 18k yellow gold?",
+      "18K Yellow Gold offers Classic Beauty, Excellent Durability, Warm Tone, Traditional Choice. It's best for Classic pieces, heirlooms."
+    ],
+    [
+      "Could you explain what are typical lead times?",
+      "Bespoke projects typically take 4–8 weeks depending on complexity. Simple modifications may take 2-3 weeks, while completely custom pieces with rare gemstones can take up to 12 weeks."
+    ],
+    [
+      "Good afternoon, what is your return policy?",
+      "Bespoke pieces are custom-made for you and generally cannot be returned. However, we offer unlimited revisions during the design phase and a satisfaction guarantee on craftsmanship."
+    ],
+    [
+      "Good morning, how much for heritage collection?",
+      "Heritage Collection start From £1,800. Prices vary based on materials and complexity."
+    ],
+    [
+      "Can you tell me how long have you been in business?",
+      "We have 15+ years of experience in bespoke jewelry creation."
+    ],
+    [
+      "Hi, tell me about 18k rose gold",
+      "18K Rose Gold: Romantic and distinctive with its beautiful blush tone created by copper alloys. Increasingly popular for its unique warmth and vintage appeal. Key properties: Romantic Tone, Unique Character, Vintage Appeal, Growing Popularity."
+    ],
+    [
+      "Good afternoon, tell me about platinum",
+      "Platinum: The ultimate choice for luxury jewelry. Naturally white, hypoallergenic, and incredibly durable. Platinum develops a beautiful patina over time while maintaining its strength. Key properties: Hypoallergenic, Naturally White, Extremely Durable, Develops Patina."
+    ],
+    [
+      "Good afternoon, how is my jewelry crafted?",
+      "Step 3 - Craft: Our master craftspeople bring your design to life using traditional techniques and modern precision. Every piece is handmade with exceptional attention to detail."
+    ],
+    [
+      "I'm interested in how long have you been in business?",
+      "We have 15+ years of experience in bespoke jewelry creation."
+    ],
+    [
+      "Can you tell me tell me about earrings",
+      "Earrings: From elegant studs for everyday wear to dramatic drops for special occasions, crafted with precision. We have 45+ designs available, starting From £600."
+    ],
+    [
+      "Good morning, what makes sapphires special?",
+      "Sapphires are valued for Available in many colors, Excellent durability, Royal heritage, Symbolic meaning."
+    ],
+    [
+      "Hey, how do i book a consultation?",
+      "You can book a In-Person Consultation, Virtual Video Call, Phone Consultation. We offer Free consultation and typical sessions last 60-90 minutes."
+    ]
+  ],
+  "total_samples": 167,
+  "categories": [
+    "brand",
+    "bespoke_process",
+    "collections",
+    "materials",
+    "gemstones",
+    "services",
+    "pricing",
+    "faq",
+    "contact",
+    "care"
+  ]
+}

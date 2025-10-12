@@ -1,5 +1,3 @@
-import { consumeStream, convertToModelMessages, streamText, type UIMessage } from "ai"
-
 export const maxDuration = 30
 
 const WEBSITE_KNOWLEDGE = `
@@ -30,8 +28,8 @@ TONE & STYLE:
 - Always respond in English. Handle greetings and small talk gracefully (hello, hi, good morning, etc.).
 
 GUIDANCE:
-- If asked “where is X?”, provide the section name and direct link (e.g., /bespoke-process).
-- For sales or appointments, suggest “You can book at /appointments”.
+- If asked "where is X?", provide the section name and direct link (e.g., /bespoke-process).
+- For sales or appointments, suggest "You can book at /appointments".
 - For sizes, guide to /sizing and summarize key points.
 - For materials/gemstones, summarize essentials and link to /materials or /gemstones.
 - If a question is outside site scope, answer briefly and steer back to relevant sections.
@@ -53,7 +51,7 @@ SAMPLE LINKS:
 - Stores: /stores
 `
 
-function getLastUserMessage(messages: UIMessage[]) {
+function getLastUserMessage(messages: any[]) {
   for (let i = messages.length - 1; i >= 0; i--) {
     if (messages[i].role === "user") return messages[i]
   }
@@ -64,15 +62,15 @@ function buildFallbackReply(input: string): string {
   const q = input.toLowerCase()
   // Greetings and small talk
   if (/(^|\b)(hi|hello|hey|good (morning|afternoon|evening))\b/.test(q)) {
-    return "Hello! I’m the Ornament Tech concierge. I can help with bespoke consultations, collections, gemstones, sizing, and bookings. What would you like to explore?"
+    return "Hello! I'm the Ornament Tech concierge. I can help with bespoke consultations, collections, gemstones, sizing, and bookings. What would you like to explore?"
   }
   if (/\b(thank(s| you)|thanks)\b/.test(q)) {
-    return "You’re welcome! If you need anything else, I’m here to help."
+    return "You're welcome! If you need anything else, I'm here to help."
   }
 
   // Top intents → links
   if (q.includes("bespoke") || q.includes("custom")) {
-    return "Our bespoke process covers consultation, design, crafting, and delivery. Explore it here: /bespoke-process. If you’re ready, you can book a consultation at /appointments."
+    return "Our bespoke process covers consultation, design, crafting, and delivery. Explore it here: /bespoke-process. If you're ready, you can book a consultation at /appointments."
   }
   if (
     q.includes("collection") ||
@@ -120,7 +118,7 @@ function buildFallbackReply(input: string): string {
     q.includes("resizing") ||
     q.includes("price")
   ) {
-    return "Common questions are answered at /faq. If you need more detail, I’m happy to help."
+    return "Common questions are answered at /faq. If you need more detail, I'm happy to help."
   }
   if (q.includes("care") || q.includes("clean") || q.includes("maintenance")) {
     return "For cleaning and maintenance best practices, see /care."
@@ -160,55 +158,52 @@ function fallbackSseResponse(text: string): Response {
 }
 
 export async function POST(req: Request) {
-  const { messages }: { messages: UIMessage[] } = await req.json()
-  const modelMessages = convertToModelMessages(messages)
-
-  const systemMessage = {
-    role: "system" as const,
-    content:
-      `You are the Ornament Tech AI Concierge.\n` +
-      `- Always respond in English.\n` +
-      `- Be friendly, expert, and concise. Offer guidance on bespoke consultations, materials, gemstone choices, sizing, and booking.\n` +
-      `- Provide clear internal links by path (e.g., /appointments) when helpful.\n` +
-      `- If a question goes beyond the site, you may answer generally but keep the brand voice.\n` +
-      `- Use the knowledge below as your source of truth.\n\n${WEBSITE_KNOWLEDGE}`,
+  const body = await req.json()
+  const { messages, message } = body
+  
+  // Handle different input formats
+  let userInput = ''
+  
+  if (message) {
+    // Direct message format
+    userInput = typeof message === 'string' ? message : ''
+  } else if (messages && Array.isArray(messages)) {
+    // AI SDK messages format
+    const lastUserMessage = getLastUserMessage(messages)
+    userInput = typeof lastUserMessage?.content === 'string' 
+      ? lastUserMessage.content 
+      : Array.isArray(lastUserMessage?.content)
+        ? lastUserMessage.content.map((c: any) => c.type === 'text' ? c.text : c.text || c).join(' ')
+        : messages[messages.length - 1]?.content || ''
   }
 
   try {
-    const result = streamText({
-      model: "openai/gpt-5",
-      messages: [systemMessage, ...modelMessages],
-      abortSignal: req.signal,
-      maxOutputTokens: 800,
-      temperature: 0.3,
-    })
-
-    return result.toUIMessageStreamResponse({
-      onFinish: async ({ isAborted }) => {
-        if (isAborted) {
-          // no-op on abort
-        }
+    // Call the ML chatbot API
+    const response = await fetch('http://127.0.0.1:5000/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
-      consumeSseStream: consumeStream,
+      body: JSON.stringify({
+        message: userInput
+      })
     })
-  } catch (err: any) {
-    const raw = String(err?.message || "")
-    const isGatewayBlock =
-      raw.includes("customer_verification_required") ||
-      raw.includes("AI Gateway requires a valid credit card") ||
-      raw.includes("status 403")
 
-    const lastUser = getLastUserMessage(messages)
-    const reply = buildFallbackReply(lastUser?.content?.map?.((c) => ("text" in c ? c.text : "")).join(" ") || "")
-
-    if (isGatewayBlock) {
-      return fallbackSseResponse(
-        `${reply}\n\nNote: The AI model is temporarily unavailable. I’m using a local assistant so you can keep exploring the site.`,
-      )
+    if (response.ok) {
+      const mlResponse = await response.json()
+      
+      // Use the ML model's response
+      const reply = mlResponse.response || buildFallbackReply(userInput)
+      
+      return fallbackSseResponse(reply)
+    } else {
+      throw new Error(`ML API returned ${response.status}`)
     }
-
-    return fallbackSseResponse(
-      `${reply}\n\nNote: I’m running in a reduced mode due to a temporary error. Please try again in a moment.`,
-    )
+  } catch (error) {
+    console.error('ML Chatbot API Error:', error)
+    
+    // Fallback to rule-based responses if ML API fails
+    const reply = buildFallbackReply(userInput)
+    return fallbackSseResponse(`${reply}\n\n(Note: Running in fallback mode)`)
   }
 }

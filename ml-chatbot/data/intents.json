@@ -1,0 +1,127 @@
+{
+  "greeting": [
+    "hello",
+    "hi",
+    "hey",
+    "good morning",
+    "good afternoon",
+    "good evening",
+    "howdy",
+    "greetings",
+    "what's up",
+    "how are you"
+  ],
+  "booking": [
+    "book appointment",
+    "schedule consultation",
+    "make appointment",
+    "book consultation",
+    "schedule meeting",
+    "arrange consultation",
+    "book session",
+    "reserve appointment"
+  ],
+  "product_info": [
+    "tell me about",
+    "what is",
+    "describe",
+    "explain",
+    "information about",
+    "details about",
+    "learn about",
+    "know about",
+    "show me"
+  ],
+  "pricing": [
+    "how much",
+    "what's the price",
+    "cost",
+    "pricing",
+    "budget",
+    "expensive",
+    "affordable",
+    "payment",
+    "price range",
+    "what does it cost"
+  ],
+  "materials": [
+    "gold",
+    "platinum",
+    "silver",
+    "metal",
+    "material",
+    "what's it made of",
+    "rose gold",
+    "white gold",
+    "yellow gold",
+    "metals"
+  ],
+  "gemstones": [
+    "diamond",
+    "sapphire",
+    "emerald",
+    "ruby",
+    "gemstone",
+    "stone",
+    "gem",
+    "precious stone",
+    "birthstone",
+    "crystal"
+  ],
+  "process": [
+    "how does it work",
+    "process",
+    "steps",
+    "procedure",
+    "method",
+    "how do you",
+    "what happens",
+    "timeline",
+    "stages",
+    "workflow"
+  ],
+  "contact": [
+    "contact",
+    "phone",
+    "email",
+    "address",
+    "location",
+    "where are you",
+    "how to reach",
+    "get in touch",
+    "call",
+    "visit"
+  ],
+  "care": [
+    "care",
+    "maintenance",
+    "clean",
+    "repair",
+    "resize",
+    "fix",
+    "polish",
+    "look after",
+    "maintain",
+    "service"
+  ],
+  "thanks": [
+    "thank you",
+    "thanks",
+    "appreciate",
+    "grateful",
+    "cheers",
+    "ta",
+    "much appreciated",
+    "thank you so much"
+  ],
+  "goodbye": [
+    "goodbye",
+    "bye",
+    "see you",
+    "farewell",
+    "take care",
+    "catch you later",
+    "talk to you later",
+    "have a good day"
+  ]
+}

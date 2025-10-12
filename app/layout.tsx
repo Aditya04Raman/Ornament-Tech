@@ -6,10 +6,16 @@ import { Suspense } from "react"
 import SiteHeader from "@/components/site-header"
 import SiteFooter from "@/components/site-footer"
 import ChatWidget from "@/components/chat-widget"
+import ScrollToTop from "@/components/scroll-to-top"
+import ScrollReset from "@/components/scroll-reset"
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
-const cormorant = Cormorant_Garamond({ subsets: ["latin"], variable: "--font-cormorant" })
+const cormorant = Cormorant_Garamond({ 
+  subsets: ["latin"], 
+  variable: "--font-cormorant",
+  weight: ["300", "400", "500", "600", "700"]
+})
 
 export const metadata: Metadata = {
   title: "Ornament Tech",
@@ -25,10 +31,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${cormorant.variable} antialiased`}>
       <body className="font-sans">
+        <ScrollReset />
         <SiteHeader />
         <main>{children}</main>
         <SiteFooter />
         <ChatWidget />
+        <ScrollToTop />
         <Suspense fallback={null}></Suspense>
         <Analytics />
       </body>

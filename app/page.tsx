@@ -29,6 +29,26 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Stats Section */}
+      <section className="px-6 py-12 bg-background">
+        <div className="mx-auto max-w-6xl">
+          <div className="grid gap-8 md:grid-cols-3 text-center">
+            <div>
+              <div className="font-serif text-4xl md:text-5xl text-primary">15+</div>
+              <div className="mt-2 text-sm opacity-70">Years of Experience</div>
+            </div>
+            <div>
+              <div className="font-serif text-4xl md:text-5xl text-primary">500+</div>
+              <div className="mt-2 text-sm opacity-70">Happy Customers</div>
+            </div>
+            <div>
+              <div className="font-serif text-4xl md:text-5xl text-primary">1200+</div>
+              <div className="mt-2 text-sm opacity-70">Pieces Created</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Craftsmanship Story */}
       <section className="px-6 py-14 md:py-20 bg-card">
         <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-2">
@@ -94,6 +114,44 @@ export default function HomePage() {
                 </div>
               </a>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="px-6 py-14 md:py-20 bg-card">
+        <div className="mx-auto max-w-6xl">
+          <header className="text-center mb-12">
+            <h2 className="font-serif text-3xl md:text-4xl">What Our Customers Say</h2>
+          </header>
+          <div className="grid gap-8 md:grid-cols-3">
+            <div className="bg-background rounded-lg p-6">
+              <div className="flex mb-3">
+                {[...Array(5)].map((_, i) => (
+                  <span key={i} className="text-accent">★</span>
+                ))}
+              </div>
+              <p className="text-sm opacity-90 mb-4">"Absolutely stunning ring! The bespoke process was so personal and the final piece exceeded all expectations."</p>
+              <div className="text-xs opacity-70">— Sarah M.</div>
+            </div>
+            <div className="bg-background rounded-lg p-6">
+              <div className="flex mb-3">
+                {[...Array(5)].map((_, i) => (
+                  <span key={i} className="text-accent">★</span>
+                ))}
+              </div>
+              <p className="text-sm opacity-90 mb-4">"Professional service from start to finish. They truly understood our vision and brought it to life perfectly."</p>
+              <div className="text-xs opacity-70">— James & Emma K.</div>
+            </div>
+            <div className="bg-background rounded-lg p-6">
+              <div className="flex mb-3">
+                {[...Array(5)].map((_, i) => (
+                  <span key={i} className="text-accent">★</span>
+                ))}
+              </div>
+              <p className="text-sm opacity-90 mb-4">"The quality is exceptional and the AI concierge made the whole experience so smooth and informative."</p>
+              <div className="text-xs opacity-70">— Michael R.</div>
+            </div>
           </div>
         </div>
       </section>

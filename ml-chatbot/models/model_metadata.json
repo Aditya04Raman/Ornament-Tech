@@ -1,0 +1,30 @@
+{
+  "training_date": "2025-10-12T19:10:36.051857",
+  "model_version": "1.0",
+  "training_samples": 167,
+  "intent_classes": [
+    "booking",
+    "care",
+    "contact",
+    "gemstones",
+    "goodbye",
+    "greeting",
+    "materials",
+    "pricing",
+    "process",
+    "product_info",
+    "thanks"
+  ],
+  "categories": [
+    "brand",
+    "bespoke_process",
+    "collections",
+    "materials",
+    "gemstones",
+    "services",
+    "pricing",
+    "faq",
+    "contact",
+    "care"
+  ]
+}

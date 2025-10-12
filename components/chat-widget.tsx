@@ -1,15 +1,95 @@
 "use client"
 
 import { useState } from "react"
-import { useChat } from "@ai-sdk/react"
-import { DefaultChatTransport } from "ai"
+
+interface Message {
+  id: string
+  role: "user" | "assistant"
+  content: string
+}
 
 export default function ChatWidget() {
   const [open, setOpen] = useState(false)
+  const [messages, setMessages] = useState<Message[]>([])
+  const [input, setInput] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
 
-  const { messages, sendMessage, status } = useChat({
-    transport: new DefaultChatTransport({ api: "/api/chat" }),
-  })
+  const sendMessage = async (content: string) => {
+    if (!content.trim()) return
+
+    const userMessage: Message = {
+      id: Date.now().toString(),
+      role: "user",
+      content: content.trim()
+    }
+
+    setMessages(prev => [...prev, userMessage])
+    setInput("")
+    setIsLoading(true)
+
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          messages: [...messages, userMessage].map(m => ({
+            role: m.role,
+            content: [{ type: "text", text: m.content }]
+          }))
+        }),
+      })
+
+      if (response.ok) {
+        const reader = response.body?.getReader()
+        if (reader) {
+          const assistantMessage: Message = {
+            id: (Date.now() + 1).toString(),
+            role: "assistant",
+            content: ""
+          }
+          
+          setMessages(prev => [...prev, assistantMessage])
+          
+          while (true) {
+            const { done, value } = await reader.read()
+            if (done) break
+            
+            const chunk = new TextDecoder().decode(value)
+            const lines = chunk.split('\n')
+            
+            for (const line of lines) {
+              if (line.startsWith('data: ')) {
+                try {
+                  const data = JSON.parse(line.slice(6))
+                  if (data.content && data.content[0]?.text) {
+                    setMessages(prev => prev.map(m => 
+                      m.id === assistantMessage.id 
+                        ? { ...m, content: m.content + data.content[0].text }
+                        : m
+                    ))
+                  }
+                } catch (e) {
+                  // Ignore parsing errors
+                }
+              }
+            }
+          }
+        }
+      }
+    } catch (error) {
+      console.error("Chat error:", error)
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: "assistant",
+        content: "Hello! I'm the Ornament Tech concierge. I can help with bespoke consultations, collections, gemstones, sizing, and bookings. What would you like to explore?"
+      }
+      setMessages(prev => [...prev, errorMessage])
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   return (
     <>
@@ -27,7 +107,7 @@ export default function ChatWidget() {
         <div
           role="dialog"
           aria-modal="true"
-          className="fixed bottom-24 right-6 z-40 w-[22rem] max-w-[90vw] rounded-lg border border-border bg-card text-foreground shadow-xl flex flex-col"
+          className="fixed bottom-24 right-6 z-40 w-[22rem] max-w-[90vw] rounded-lg border border-border bg-card text-foreground shadow-xl flex flex-col max-h-[32rem]"
         >
           <header className="px-4 py-3 border-b border-border">
             <h2 className="text-sm font-medium text-pretty">Ornament Tech Concierge</h2>
@@ -48,24 +128,30 @@ export default function ChatWidget() {
               <div key={m.id} className="text-sm">
                 <div className="mb-1 font-semibold">{m.role === "user" ? "You" : "Ornament Tech"}</div>
                 <div className="rounded-md border border-border bg-background p-2 leading-relaxed">
-                  {m.parts.map((part, idx) => {
-                    if (part.type === "text") return <div key={idx}>{part.text}</div>
-                    return null
-                  })}
+                  {m.content}
                 </div>
               </div>
             ))}
+            
+            {isLoading && (
+              <div className="text-sm">
+                <div className="mb-1 font-semibold">Ornament Tech</div>
+                <div className="rounded-md border border-border bg-background p-2 leading-relaxed">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+                    <div className="w-2 h-2 bg-primary rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
+                    <div className="w-2 h-2 bg-primary rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           <form
             className="border-t border-border p-2 flex items-center gap-2"
             onSubmit={(e) => {
               e.preventDefault()
-              const inputEl = e.currentTarget.elements.namedItem("message") as HTMLInputElement
-              const value = inputEl.value.trim()
-              if (!value) return
-              sendMessage({ text: value })
-              inputEl.value = ""
+              sendMessage(input)
             }}
           >
             <label htmlFor="ot-chat-input" className="sr-only">
@@ -76,12 +162,14 @@ export default function ChatWidget() {
               name="message"
               placeholder="Type your message…"
               className="flex-1 rounded-md border border-border bg-background px-3 py-2 text-sm outline-none"
-              disabled={status === "in_progress"}
+              disabled={isLoading}
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
             />
             <button
               type="submit"
               className="rounded-md bg-primary text-primary-foreground px-3 py-2 text-sm"
-              disabled={status === "in_progress"}
+              disabled={isLoading || !input.trim()}
             >
               Send
             </button>
