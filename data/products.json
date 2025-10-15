@@ -1,0 +1,297 @@
+{
+  "jewelry_products": {
+    "engagement_rings": [
+      {
+        "id": "ER001",
+        "name": "Classic Round Solitaire",
+        "price_range": "£2,500 - £8,500",
+        "starting_price": 2500,
+        "description": "Timeless 6-prong solitaire setting showcasing round brilliant cut diamonds",
+        "metal_options": ["18k White Gold", "18k Yellow Gold", "18k Rose Gold", "Platinum"],
+        "center_stone_options": ["0.5ct", "0.75ct", "1.0ct", "1.5ct", "2.0ct"],
+        "features": [
+          "GIA certified diamonds",
+          "Comfort fit band",
+          "Lifetime warranty",
+          "Free sizing",
+          "Custom engraving available"
+        ],
+        "style_category": "Classic",
+        "setting_type": "Solitaire",
+        "band_width": "2mm",
+        "availability": "Made to order",
+        "lead_time": "4-6 weeks",
+        "image": "/diamond-ring-macro-editorial.jpg"
+      },
+      {
+        "id": "ER002",
+        "name": "Vintage Art Deco Halo",
+        "price_range": "£3,200 - £12,000",
+        "starting_price": 3200,
+        "description": "Art Deco inspired halo setting with intricate milgrain details and vintage charm",
+        "metal_options": ["18k White Gold", "18k Yellow Gold", "Platinum"],
+        "center_stone_options": ["0.5ct", "0.75ct", "1.0ct", "1.5ct", "2.0ct"],
+        "features": [
+          "Hand-engraved milgrain details",
+          "Micro-pavé diamond halo",
+          "Vintage-inspired gallery",
+          "Conflict-free diamonds",
+          "Heirloom quality craftsmanship"
+        ],
+        "style_category": "Vintage",
+        "setting_type": "Halo",
+        "band_width": "2.5mm",
+        "availability": "Made to order",
+        "lead_time": "6-8 weeks",
+        "image": "/diamond-ring-on-velvet-close-up-luxury-editorial.jpg"
+      },
+      {
+        "id": "ER003",
+        "name": "Three Stone Trinity",
+        "price_range": "£4,100 - £15,000",
+        "starting_price": 4100,
+        "description": "Past, present, and future represented in perfect harmony with three matched stones",
+        "metal_options": ["18k White Gold", "18k Yellow Gold", "18k Rose Gold", "Platinum"],
+        "center_stone_options": ["1.0ct center + 0.5ct sides", "1.5ct center + 0.75ct sides", "2.0ct center + 1.0ct sides"],
+        "features": [
+          "Matched side stones",
+          "Elegant tapered band",
+          "Cathedral setting",
+          "GIA certified stones",
+          "Custom stone selection"
+        ],
+        "style_category": "Classic",
+        "setting_type": "Three Stone",
+        "band_width": "2.2mm",
+        "availability": "Made to order",
+        "lead_time": "5-7 weeks",
+        "image": "/placeholder.jpg"
+      },
+      {
+        "id": "ER004",
+        "name": "Modern Tension Setting",
+        "price_range": "£3,800 - £11,500",
+        "starting_price": 3800,
+        "description": "Contemporary tension setting that appears to suspend the diamond in air",
+        "metal_options": ["18k White Gold", "Platinum"],
+        "center_stone_options": ["0.75ct", "1.0ct", "1.5ct", "2.0ct"],
+        "features": [
+          "Precision tension mounting",
+          "Modern minimalist design",
+          "Maximum light exposure",
+          "Certified diamonds only",
+          "Engineering precision"
+        ],
+        "style_category": "Modern",
+        "setting_type": "Tension",
+        "band_width": "4mm",
+        "availability": "Made to order",
+        "lead_time": "8-10 weeks",
+        "image": "/placeholder.jpg"
+      },
+      {
+        "id": "ER005",
+        "name": "Rose Gold Twisted Band",
+        "price_range": "£2,800 - £9,200",
+        "starting_price": 2800,
+        "description": "Romantic twisted band design in warm rose gold with classic solitaire setting",
+        "metal_options": ["18k Rose Gold", "14k Rose Gold"],
+        "center_stone_options": ["0.5ct", "0.75ct", "1.0ct", "1.5ct"],
+        "features": [
+          "Hand-twisted band detail",
+          "Romantic rose gold tone",
+          "Comfort fit interior",
+          "Ethically sourced diamonds",
+          "Lifetime polishing"
+        ],
+        "style_category": "Romantic",
+        "setting_type": "Solitaire",
+        "band_width": "2.8mm",
+        "availability": "Made to order",
+        "lead_time": "4-6 weeks",
+        "image": "/placeholder.jpg"
+      }
+    ],
+    "wedding_bands": [
+      {
+        "id": "WB001",
+        "name": "Classic Comfort Fit Band",
+        "price_range": "£800 - £1,500",
+        "starting_price": 800,
+        "description": "Timeless wedding band with comfort fit interior for everyday wear",
+        "metal_options": ["18k White Gold", "18k Yellow Gold", "18k Rose Gold", "Platinum"],
+        "width_options": ["2mm", "3mm", "4mm", "5mm", "6mm"],
+        "features": [
+          "Comfort fit interior",
+          "High polish finish",
+          "Durable construction",
+          "Hypoallergenic metals",
+          "Lifetime warranty"
+        ],
+        "style_category": "Classic",
+        "finish_options": ["High Polish", "Matte", "Brushed"],
+        "availability": "In stock",
+        "lead_time": "1-2 weeks",
+        "image": "/gold-wedding-bands-flatlay-minimal.jpg"
+      },
+      {
+        "id": "WB002",
+        "name": "Diamond Eternity Band",
+        "price_range": "£1,800 - £6,500",
+        "starting_price": 1800,
+        "description": "Continuous diamonds representing eternal love and commitment",
+        "metal_options": ["18k White Gold", "18k Yellow Gold", "Platinum"],
+        "diamond_options": ["Half Eternity", "Full Eternity", "Channel Set", "Pavé Set"],
+        "features": [
+          "Conflict-free diamonds",
+          "Secure channel setting",
+          "Matched diamond quality",
+          "Professional sizing",
+          "Certificate of authenticity"
+        ],
+        "style_category": "Luxury",
+        "carat_weight": "0.5ct - 2.0ct total",
+        "availability": "Made to order",
+        "lead_time": "4-6 weeks",
+        "image": "/placeholder.jpg"
+      },
+      {
+        "id": "WB003",
+        "name": "Hammered Texture Band",
+        "price_range": "£950 - £1,800",
+        "starting_price": 950,
+        "description": "Hand-hammered texture creates unique light reflection and organic appeal",
+        "metal_options": ["18k White Gold", "18k Yellow Gold", "18k Rose Gold"],
+        "width_options": ["3mm", "4mm", "5mm", "6mm"],
+        "features": [
+          "Hand-hammered finish",
+          "Unique texture pattern",
+          "Artisan craftsmanship",
+          "Comfort fit",
+          "Custom width available"
+        ],
+        "style_category": "Artisan",
+        "finish_options": ["Matte Hammered", "Polished Hammered"],
+        "availability": "Made to order",
+        "lead_time": "3-4 weeks",
+        "image": "/placeholder.jpg"
+      }
+    ],
+    "necklaces": [
+      {
+        "id": "NK001",
+        "name": "Diamond Tennis Necklace",
+        "price_range": "£2,800 - £15,000",
+        "starting_price": 2800,
+        "description": "Classic tennis necklace featuring graduated brilliant cut diamonds",
+        "metal_options": ["18k White Gold", "18k Yellow Gold", "Platinum"],
+        "length_options": ["16 inches", "18 inches", "20 inches"],
+        "features": [
+          "Graduated diamond sizing",
+          "Secure box clasp",
+          "GIA certified diamonds",
+          "Flexible link design",
+          "Professional cleaning included"
+        ],
+        "style_category": "Classic",
+        "total_carat_weight": "3ct - 12ct",
+        "availability": "Made to order",
+        "lead_time": "6-8 weeks",
+        "image": "/gold-necklace-minimal-editorial.jpg"
+      },
+      {
+        "id": "NK002",
+        "name": "Cultured Pearl Strand",
+        "price_range": "£1,200 - £4,500",
+        "starting_price": 1200,
+        "description": "Lustrous cultured pearls hand-knotted on premium silk thread",
+        "pearl_types": ["Akoya", "South Sea", "Tahitian"],
+        "length_options": ["16 inches", "18 inches", "20 inches", "24 inches"],
+        "features": [
+          "Hand-knotted on silk",
+          "Matched pearl luster",
+          "14k gold clasp",
+          "Certificate included",
+          "Restringing service"
+        ],
+        "style_category": "Classic",
+        "pearl_sizes": "6-7mm, 7-8mm, 8-9mm",
+        "availability": "In stock",
+        "lead_time": "1-2 weeks",
+        "image": "/placeholder.jpg"
+      }
+    ],
+    "earrings": [
+      {
+        "id": "ER101",
+        "name": "Diamond Stud Earrings",
+        "price_range": "£1,500 - £8,000",
+        "starting_price": 1500,
+        "description": "Classic four-prong diamond studs in perfectly matched pairs",
+        "metal_options": ["18k White Gold", "18k Yellow Gold", "Platinum"],
+        "carat_options": ["0.25ct total", "0.50ct total", "1.0ct total", "1.5ct total", "2.0ct total"],
+        "features": [
+          "Matched diamond pairs",
+          "Secure screw backs",
+          "GIA certified diamonds",
+          "Premium settings",
+          "Lifetime warranty"
+        ],
+        "style_category": "Classic",
+        "setting_type": "Four Prong",
+        "availability": "In stock",
+        "lead_time": "1-2 weeks",
+        "image": "/gemstones-macro-editorial.jpg"
+      },
+      {
+        "id": "ER102",
+        "name": "Pearl Drop Earrings",
+        "price_range": "£800 - £2,200",
+        "starting_price": 800,
+        "description": "Elegant cultured pearl drops perfect for special occasions",
+        "metal_options": ["18k White Gold", "18k Yellow Gold"],
+        "pearl_types": ["Akoya", "South Sea", "Tahitian"],
+        "features": [
+          "Premium cultured pearls",
+          "Secure lever backs",
+          "Matched pearl pairs",
+          "Elegant drop design",
+          "Gift box included"
+        ],
+        "style_category": "Elegant",
+        "pearl_sizes": "8-9mm, 9-10mm, 10-11mm",
+        "availability": "In stock",
+        "lead_time": "1-2 weeks",
+        "image": "/placeholder.jpg"
+      }
+    ]
+  },
+  "collections_metadata": {
+    "engagement_rings": {
+      "total_products": 5,
+      "price_range": "£2,500 - £15,000",
+      "popular_metals": ["18k White Gold", "Platinum", "18k Rose Gold"],
+      "popular_styles": ["Solitaire", "Halo", "Three Stone"],
+      "average_lead_time": "4-8 weeks"
+    },
+    "wedding_bands": {
+      "total_products": 3,
+      "price_range": "£800 - £6,500",
+      "popular_metals": ["18k White Gold", "18k Yellow Gold", "Platinum"],
+      "popular_styles": ["Classic", "Eternity", "Textured"],
+      "average_lead_time": "1-6 weeks"
+    },
+    "necklaces": {
+      "total_products": 2,
+      "price_range": "£1,200 - £15,000",
+      "popular_styles": ["Tennis", "Pearl Strand", "Pendant"],
+      "average_lead_time": "1-8 weeks"
+    },
+    "earrings": {
+      "total_products": 2,
+      "price_range": "£800 - £8,000",
+      "popular_styles": ["Studs", "Drops", "Hoops"],
+      "average_lead_time": "1-2 weeks"
+    }
+  }
+}

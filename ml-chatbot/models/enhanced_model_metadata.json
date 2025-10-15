@@ -1,0 +1,23 @@
+{
+  "training_date": "2025-10-16T01:04:47.654360",
+  "model_version": "2.0_enhanced",
+  "datasets_used": [
+    "diamonds",
+    "jewelry_comprehensive"
+  ],
+  "total_qa_pairs": 23,
+  "intent_classes": [
+    "care",
+    "custom_design",
+    "diamond_info",
+    "general_info",
+    "jewelry_info",
+    "pricing",
+    "ring_info"
+  ],
+  "features": {
+    "price_prediction": true,
+    "intent_classification": true,
+    "dataset_integration": true
+  }
+}

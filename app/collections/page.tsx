@@ -4,6 +4,7 @@ export default function CollectionsPage() {
   const collections = [
     { 
       name: "Engagement Rings", 
+      slug: "engagement-rings",
       desc: "Solitaire classics, vintage-inspired halos, and completely custom designs to mark your unique love story.",
       image: "/diamond-ring-macro-editorial.jpg",
       pieces: "50+ designs",
@@ -11,6 +12,7 @@ export default function CollectionsPage() {
     },
     { 
       name: "Wedding Bands", 
+      slug: "wedding-bands",
       desc: "Perfectly paired bands in classic, textured, and shaped styles. Each designed to complement your engagement ring.",
       image: "/gold-wedding-bands-flatlay-minimal.jpg",
       pieces: "40+ designs",
@@ -18,6 +20,7 @@ export default function CollectionsPage() {
     },
     { 
       name: "Necklaces", 
+      slug: "necklaces",
       desc: "Delicate pendants to statement pieces, each featuring carefully selected gemstones and precious metals.",
       image: "/gold-necklace-minimal-editorial.jpg",
       pieces: "35+ designs",
@@ -25,6 +28,7 @@ export default function CollectionsPage() {
     },
     { 
       name: "Earrings", 
+      slug: "earrings",
       desc: "From elegant studs for everyday wear to dramatic drops for special occasions, crafted with precision.",
       image: "/gemstones-macro-editorial.jpg",
       pieces: "45+ designs",
@@ -32,6 +36,7 @@ export default function CollectionsPage() {
     },
     { 
       name: "Bridal Collection", 
+      slug: "bridal-collection",
       desc: "Complete bridal sets designed to complement each other perfectly for your special day.",
       image: "/bridal-jewellery-collection.jpg",
       pieces: "25+ sets",
@@ -39,6 +44,7 @@ export default function CollectionsPage() {
     },
     { 
       name: "Heritage Collection", 
+      slug: "heritage-collection",
       desc: "Timeless pieces inspired by classical designs, updated with contemporary craftsmanship.",
       image: "/heritage-jewellery-collection.jpg",
       pieces: "30+ designs",
@@ -103,9 +109,12 @@ export default function CollectionsPage() {
                         <div className="text-sm font-medium">{collection.pieces}</div>
                         <div className="text-xs opacity-90">{collection.startingPrice}</div>
                       </div>
-                      <button className="bg-white/20 backdrop-blur-sm rounded-full p-2 hover:bg-white/30 transition-colors">
+                      <a
+                        href={`/collections/${collection.slug}`}
+                        className="bg-white/20 backdrop-blur-sm rounded-full p-2 hover:bg-white/30 transition-colors"
+                      >
                         <span className="text-lg">→</span>
-                      </button>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -114,7 +123,12 @@ export default function CollectionsPage() {
                   <p className="text-sm opacity-80 leading-relaxed mb-4">{collection.desc}</p>
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-primary font-medium">{collection.pieces}</span>
-                    <button className="text-sm text-primary hover:underline">Explore Collection →</button>
+                    <a 
+                      href={`/collections/${collection.slug}`}
+                      className="text-sm text-primary hover:underline"
+                    >
+                      Explore Collection →
+                    </a>
                   </div>
                 </div>
               </article>

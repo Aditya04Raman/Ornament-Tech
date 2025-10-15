@@ -1,3 +1,6 @@
+import { readFileSync } from 'fs'
+import { join } from 'path'
+
 export const maxDuration = 30
 
 const WEBSITE_KNOWLEDGE = `
@@ -51,6 +54,76 @@ SAMPLE LINKS:
 - Stores: /stores
 `
 
+// Load Kaggle dataset for product recommendations
+function getKaggleDataset() {
+  try {
+    const jewelryPath = join(process.cwd(), 'ml-chatbot', 'models', 'jewelry_dataset.csv')
+    const diamondsPath = join(process.cwd(), 'ml-chatbot', 'models', 'diamonds_dataset.csv')
+    
+    let products: any[] = []
+    
+    // Load jewelry dataset
+    if (require('fs').existsSync(jewelryPath)) {
+      const csvData = readFileSync(jewelryPath, 'utf-8')
+      const lines = csvData.split('\n')
+      const headers = lines[0].split(',')
+      
+      const jewelry = lines.slice(1, -1).map((line, index) => {
+        const values = line.split(',')
+        if (values.length === headers.length) {
+          return {
+            id: `jewelry_${index + 1}`,
+            name: `${values[1]?.replace(/"/g, '')} ${values[0]?.replace(/"/g, '')}`,
+            category: values[0]?.replace(/"/g, ''),
+            type: values[1]?.replace(/"/g, ''),
+            metal: values[2]?.replace(/"/g, ''),
+            stone: values[3]?.replace(/"/g, ''),
+            price: parseFloat(values[7]) || 0,
+            weight: parseFloat(values[4]) || 0,
+            source: 'jewelry_kaggle'
+          }
+        }
+        return null
+      }).filter(Boolean)
+      
+      products.push(...jewelry)
+    }
+    
+    // Load diamond dataset (sample for high-value items)
+    if (require('fs').existsSync(diamondsPath)) {
+      const csvData = readFileSync(diamondsPath, 'utf-8')
+      const lines = csvData.split('\n')
+      
+      // Take first 50 diamonds as premium items
+      const diamonds = lines.slice(1, 51).map((line, index) => {
+        const values = line.split(',')
+        if (values.length >= 7) {
+          return {
+            id: `diamond_${index + 1}`,
+            name: `${parseFloat(values[0])} Carat ${values[1]} ${values[2]} Diamond`,
+            category: 'diamond',
+            type: 'ring',
+            cut: values[1],
+            color: values[2],
+            clarity: values[3],
+            carat: parseFloat(values[0]),
+            price: parseFloat(values[6]) || 0,
+            source: 'diamond_kaggle'
+          }
+        }
+        return null
+      }).filter(Boolean)
+      
+      products.push(...diamonds)
+    }
+    
+    return products
+  } catch (error) {
+    console.error('Error loading Kaggle dataset:', error)
+    return []
+  }
+}
+
 function getLastUserMessage(messages: any[]) {
   for (let i = messages.length - 1; i >= 0; i--) {
     if (messages[i].role === "user") return messages[i]
@@ -58,14 +131,78 @@ function getLastUserMessage(messages: any[]) {
   return null
 }
 
-function buildFallbackReply(input: string): string {
+function searchProducts(query: string, products: any[], limit = 3) {
+  const searchTerms = query.toLowerCase().split(' ')
+  
+  const scored = products.map(product => {
+    let score = 0
+    const searchText = `${product.name} ${product.category} ${product.type} ${product.metal || ''} ${product.stone || ''} ${product.cut || ''} ${product.color || ''}`.toLowerCase()
+    
+    searchTerms.forEach(term => {
+      if (searchText.includes(term)) {
+        score += 1
+      }
+    })
+    
+    // Boost score for exact matches
+    if (searchText.includes(query.toLowerCase())) {
+      score += 2
+    }
+    
+    return { ...product, score }
+  })
+  
+  return scored
+    .filter(p => p.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+}
+
+function buildProductRecommendations(query: string): string {
+  const products = getKaggleDataset()
+  
+  if (products.length === 0) {
+    return "I'd be happy to help you explore our collections! Visit /collections to see our curated designs."
+  }
+  
+  const matches = searchProducts(query, products, 3)
+  
+  if (matches.length === 0) {
+    return "I'd be happy to help you find the perfect piece! Visit /collections to explore our full range, or book a consultation at /appointments for personalized recommendations."
+  }
+  
+  let response = "Based on our collection, here are some pieces you might love:\n\n"
+  
+  matches.forEach((product, index) => {
+    if (product.source === 'diamond_kaggle') {
+      response += `${index + 1}. **${product.name}** - $${product.price.toLocaleString()}\n`
+      response += `   ${product.carat} carat ${product.cut} cut, ${product.color} color, ${product.clarity} clarity\n\n`
+    } else {
+      response += `${index + 1}. **${product.name}** - $${product.price.toLocaleString()}\n`
+      response += `   ${product.metal} construction with ${product.stone} accents (${product.weight}g)\n\n`
+    }
+  })
+  
+  response += `You can explore more in our Collections: /collections, or book a consultation to discuss these pieces: /appointments`
+  
+  return response
+}
+
+function buildIntelligentReply(input: string): string {
   const q = input.toLowerCase()
+  
   // Greetings and small talk
   if (/(^|\b)(hi|hello|hey|good (morning|afternoon|evening))\b/.test(q)) {
     return "Hello! I'm the Ornament Tech concierge. I can help with bespoke consultations, collections, gemstones, sizing, and bookings. What would you like to explore?"
   }
   if (/\b(thank(s| you)|thanks)\b/.test(q)) {
     return "You're welcome! If you need anything else, I'm here to help."
+  }
+
+  // Product searches - check if user is looking for specific items
+  if (/(ring|necklace|earring|bracelet|pendant|chain|diamond|ruby|emerald|sapphire|gold|silver|platinum)/i.test(q) && 
+      /(looking for|want|need|show me|find|search|recommend)/i.test(q)) {
+    return buildProductRecommendations(input)
   }
 
   // Top intents → links
@@ -127,8 +264,11 @@ function buildFallbackReply(input: string): string {
     return "Find studio / showroom locations and visiting info at /stores."
   }
 
-  // Generic helpful reply with navigation
-  return "I can help you explore bespoke consultations, collections, gemstones, sizing, and bookings. Try: /bespoke-process, /collections, /galleries, /materials, /gemstones, /sizing, or book at /appointments."
+  // Default response with dataset info
+  const products = getKaggleDataset()
+  const productCount = products.length
+  
+  return `I can help you explore bespoke consultations, collections, gemstones, sizing, and bookings. We have ${productCount.toLocaleString()} pieces in our collection! Try: /bespoke-process, /collections, /galleries, /materials, /gemstones, /sizing, or book at /appointments.`
 }
 
 // Minimal SSE response compatible with AI SDK consumers
@@ -177,33 +317,7 @@ export async function POST(req: Request) {
         : messages[messages.length - 1]?.content || ''
   }
 
-  try {
-    // Call the ML chatbot API
-    const response = await fetch('http://127.0.0.1:5000/chat', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        message: userInput
-      })
-    })
-
-    if (response.ok) {
-      const mlResponse = await response.json()
-      
-      // Use the ML model's response
-      const reply = mlResponse.response || buildFallbackReply(userInput)
-      
-      return fallbackSseResponse(reply)
-    } else {
-      throw new Error(`ML API returned ${response.status}`)
-    }
-  } catch (error) {
-    console.error('ML Chatbot API Error:', error)
-    
-    // Fallback to rule-based responses if ML API fails
-    const reply = buildFallbackReply(userInput)
-    return fallbackSseResponse(`${reply}\n\n(Note: Running in fallback mode)`)
-  }
+  // Use dataset-powered intelligent responses directly
+  const reply = buildIntelligentReply(userInput)
+  return fallbackSseResponse(reply)
 }
