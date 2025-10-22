@@ -1,0 +1,361 @@
+{
+  "jewelry": {
+    "basic_stats": {
+      "total_items": 4000,
+      "unique_categories": 4,
+      "unique_types": 17,
+      "unique_metals": 5,
+      "unique_stones": 7,
+      "unique_brands": 5,
+      "price_range": {
+        "min": 152.60641049016104,
+        "max": 49945.18429564789,
+        "mean": 14632.884837415204,
+        "median": 12027.5832631156,
+        "std": 11254.42355422113
+      },
+      "weight_range": {
+        "min": 1.0118028513754571,
+        "max": 49.99631651482565,
+        "mean": 25.61181182616249
+      },
+      "size_range": {
+        "min": 5.000081443287563,
+        "max": 29.993464104841845,
+        "mean": 17.139964484069598
+      }
+    },
+    "categories": {
+      "distribution": {
+        "ring": 1000,
+        "necklace": 1000,
+        "earrings": 1000,
+        "bracelet": 1000
+      },
+      "avg_price_by_category": {
+        "bracelet": 10543.267715644099,
+        "earrings": 7515.335134223183,
+        "necklace": 15517.511019279566,
+        "ring": 24955.425480513968
+      },
+      "price_range_by_category": {
+        "min": {
+          "bracelet": 364.8766086185312,
+          "earrings": 152.60641049016104,
+          "necklace": 228.10266731921195,
+          "ring": 509.23314444782415
+        },
+        "max": {
+          "bracelet": 19993.98817801254,
+          "earrings": 14968.58791719264,
+          "necklace": 29995.507485694725,
+          "ring": 49945.18429564789
+        }
+      }
+    },
+    "materials": {
+      "distribution": {
+        "gold": 974,
+        "white gold": 965,
+        "silver": 932,
+        "platinum": 915,
+        "rose gold": 214
+      },
+      "avg_price_by_metal": {
+        "gold": 14164.994696054457,
+        "platinum": 13797.467700380907,
+        "rose gold": 24948.293570656304,
+        "silver": 13921.760801141292,
+        "white gold": 14296.513657068508
+      },
+      "premium_materials": {
+        "rose gold": 24948.293570656304,
+        "white gold": 14296.513657068508,
+        "gold": 14164.994696054457
+      }
+    },
+    "stones": {
+      "distribution": {
+        "diamond": 1035,
+        "gemstone": 839,
+        "none": 816,
+        "pearl": 675,
+        "ruby": 219,
+        "sapphire": 218,
+        "emerald": 198
+      },
+      "avg_price_by_stone": {
+        "diamond": 13687.746893695134,
+        "emerald": 23804.71768239088,
+        "gemstone": 11002.829077601564,
+        "none": 11501.94417099454,
+        "pearl": 14906.351953923471,
+        "ruby": 24741.213779677408,
+        "sapphire": 25478.503611403692
+      },
+      "precious_stones": {
+        "sapphire": 25478.503611403692,
+        "ruby": 24741.213779677408,
+        "emerald": 23804.71768239088,
+        "pearl": 14906.351953923471,
+        "diamond": 13687.746893695134
+      }
+    },
+    "brands": {
+      "distribution": {
+        "designer": 817,
+        "modern": 816,
+        "vintage": 811,
+        "luxury": 789,
+        "classic": 767
+      },
+      "avg_price_by_brand": {
+        "classic": 14507.371174882916,
+        "designer": 14922.794617948466,
+        "luxury": 14421.581755816373,
+        "modern": 14861.583665805581,
+        "vintage": 14434.996521609435
+      },
+      "luxury_brands": {
+        "designer": 14922.794617948466,
+        "modern": 14861.583665805581,
+        "classic": 14507.371174882916,
+        "vintage": 14434.996521609435,
+        "luxury": 14421.581755816373
+      }
+    },
+    "price_segments": {
+      "distribution": {
+        "Mid-range": 1727,
+        "Luxury": 1088,
+        "Budget": 777,
+        "Ultra-luxury": 408,
+        "Exclusive": 0
+      },
+      "category_by_segment": {
+        "Budget": "earrings",
+        "Mid-range": "earrings",
+        "Luxury": "necklace",
+        "Ultra-luxury": "ring",
+        "Exclusive": "N/A"
+      }
+    },
+    "popular_combinations": {
+      "metal_stone": {
+        "('white gold', 'diamond')": 269,
+        "('gold', 'diamond')": 264,
+        "('silver', 'diamond')": 239,
+        "('platinum', 'diamond')": 231,
+        "('gold', 'gemstone')": 225,
+        "('white gold', 'gemstone')": 221,
+        "('platinum', 'none')": 212,
+        "('silver', 'gemstone')": 205,
+        "('silver', 'none')": 204,
+        "('white gold', 'none')": 200
+      },
+      "category_metal": {
+        "('bracelet', 'white gold')": 276,
+        "('bracelet', 'gold')": 270,
+        "('necklace', 'gold')": 266,
+        "('necklace', 'platinum')": 265,
+        "('earrings', 'silver')": 263,
+        "('earrings', 'platinum')": 251,
+        "('earrings', 'white gold')": 249,
+        "('necklace', 'silver')": 241,
+        "('bracelet', 'silver')": 239,
+        "('earrings', 'gold')": 237
+      },
+      "type_stone": {
+        "('tennis', 'gemstone')": 124,
+        "('chain', 'none')": 123,
+        "('tennis', 'none')": 116,
+        "('chain', 'gemstone')": 104,
+        "('statement', 'diamond')": 104,
+        "('chain', 'diamond')": 103,
+        "('statement', 'pearl')": 95,
+        "('tennis', 'diamond')": 93,
+        "('cuff', 'gemstone')": 82,
+        "('bangle', 'gemstone')": 77
+      }
+    }
+  },
+  "diamonds": {
+    "basic_stats": {
+      "total_diamonds": 53940,
+      "unique_cuts": 5,
+      "unique_colors": 7,
+      "unique_clarities": 8,
+      "carat_range": {
+        "min": 0.2,
+        "max": 5.01,
+        "mean": 0.7979397478680015,
+        "median": 0.7
+      },
+      "price_range": {
+        "min": 326.0,
+        "max": 18823.0,
+        "mean": 3932.799721913237,
+        "median": 2401.0
+      }
+    },
+    "4cs_analysis": {
+      "cut_distribution": {
+        "Ideal": 21551,
+        "Premium": 13791,
+        "Very Good": 12082,
+        "Good": 4906,
+        "Fair": 1610
+      },
+      "color_distribution": {
+        "G": 11292,
+        "E": 9797,
+        "F": 9542,
+        "H": 8304,
+        "D": 6775,
+        "I": 5422,
+        "J": 2808
+      },
+      "clarity_distribution": {
+        "SI1": 13065,
+        "VS2": 12258,
+        "SI2": 9194,
+        "VS1": 8171,
+        "VVS2": 5066,
+        "VVS1": 3655,
+        "IF": 1790,
+        "I1": 741
+      },
+      "cut_price_impact": {
+        "Fair": 4358.757763975155,
+        "Good": 3928.864451691806,
+        "Ideal": 3457.541970210199,
+        "Premium": 4584.2577042999055,
+        "Very Good": 3981.7598907465654
+      },
+      "color_price_impact": {
+        "D": 3169.9540959409596,
+        "E": 3076.7524752475247,
+        "F": 3724.886396981765,
+        "G": 3999.135671271697,
+        "H": 4486.669195568401,
+        "I": 5091.874953891553,
+        "J": 5323.81801994302
+      },
+      "clarity_price_impact": {
+        "I1": 3924.1686909581645,
+        "IF": 2864.839106145251,
+        "SI1": 3996.001148105626,
+        "SI2": 5063.028605612356,
+        "VS1": 3839.4553910170116,
+        "VS2": 3924.989394681025,
+        "VVS1": 2523.1146374829,
+        "VVS2": 3283.737070667193
+      }
+    },
+    "size_analysis": {
+      "size_distribution": {
+        "Small": 18932,
+        "Medium": 17506,
+        "Large": 12060,
+        "Very Large": 3553,
+        "Exceptional": 1889
+      },
+      "avg_price_by_size": {
+        "Small": 839.7181491654342,
+        "Medium": 2811.342682508854,
+        "Large": 6513.526533996684,
+        "Very Large": 11321.77483816493,
+        "Exceptional": 14951.250397035468
+      },
+      "size_quality_correlation": {
+        "cut": {
+          "Small": "Ideal",
+          "Medium": "Ideal",
+          "Large": "Ideal",
+          "Very Large": "Premium",
+          "Exceptional": "Premium"
+        },
+        "color": {
+          "Small": "E",
+          "Medium": "E",
+          "Large": "G",
+          "Very Large": "H",
+          "Exceptional": "I"
+        },
+        "clarity": {
+          "Small": "VS2",
+          "Medium": "SI1",
+          "Large": "SI1",
+          "Very Large": "SI1",
+          "Exceptional": "SI2"
+        }
+      }
+    },
+    "price_analysis": {
+      "avg_price_per_carat": 4008.3947962312704,
+      "price_per_carat_by_cut": {
+        "Fair": 3767.255681282342,
+        "Good": 3860.027679749805,
+        "Ideal": 3919.699825131021,
+        "Premium": 4222.905374481676,
+        "Very Good": 4014.128365678049
+      },
+      "price_per_carat_by_color": {
+        "D": 3952.5642801756244,
+        "E": 3804.6114748198997,
+        "F": 4134.730683920376,
+        "G": 4163.411524474054,
+        "H": 4008.026940951224,
+        "I": 3996.4020514108256,
+        "J": 3825.6491919432306
+      },
+      "price_per_carat_by_clarity": {
+        "I1": 2796.296437061214,
+        "IF": 4259.931736236165,
+        "SI1": 3849.0780183125967,
+        "SI2": 4010.853865270488,
+        "VS1": 4155.8168076552065,
+        "VS2": 4080.5267865555506,
+        "VVS1": 3851.410557745065,
+        "VVS2": 4204.166012817182
+      }
+    },
+    "quality_analysis": {
+      "avg_quality_score": 3.80071066617229,
+      "high_quality_count": 12564,
+      "excellent_quality_count": 1238,
+      "quality_price_correlation": -0.22113379091268195
+    },
+    "dimension_analysis": {
+      "avg_dimensions": {
+        "length": 5.731157211716722,
+        "width": 5.734525954764553,
+        "depth": 3.538733778272154,
+        "volume": 129.84940333672597
+      },
+      "proportion_analysis": {
+        "avg_length_width_ratio": 0.999408513863491,
+        "avg_depth_percentage": 61.74940489432702,
+        "avg_table_percentage": 57.45718390804598
+      }
+    }
+  },
+  "insights": {
+    "market_trends": [
+      "Average jewelry piece costs $14,633 while average diamond costs $3,933",
+      "Price overlap exists between $326 and $18,823",
+      "Most popular jewelry category: bracelet",
+      "Most expensive metal on average: rose gold",
+      "Most popular stone: diamond",
+      "Most popular diamond cut: Ideal",
+      "Most popular diamond color: G",
+      "Most popular diamond clarity: SI1"
+    ],
+    "value_analysis": [
+      "Best value jewelry category: earrings",
+      "Best value diamond cut: Ideal"
+    ]
+  },
+  "correlations": {},
+  "patterns": {}
+}

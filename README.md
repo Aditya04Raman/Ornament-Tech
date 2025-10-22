@@ -1,30 +1,93 @@
-# Jewellery website breakdown
+# 💍 Ornament Tech - Luxury Jewelry Website
 
-*Automatically synced with your [v0.app](https://v0.app) deployments*
+*Professional jewelry website with ML-powered chatbot and comprehensive backend*
 
 [![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/aditya-ramans-projects-311b9d62/v0-jewellery-website-breakdown)
 [![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/projects/hvs2E8Vx2Qb)
 
-## Overview
+## 🎯 Overview
 
-This repository will stay in sync with your deployed chats on [v0.app](https://v0.app).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app).
+Ornament Tech is a sophisticated jewelry website featuring:
+- **ML-Powered Chatbot** with 57,940+ product dataset
+- **Complete Backend APIs** for contact forms, appointments, newsletter
+- **Professional UI/UX** with premium design and smooth interactions
+- **Comprehensive Content** covering gemstones, materials, bespoke process
 
-## Deployment
+## 📊 Project Structure
 
-Your project is live at:
+```
+ornament-tech/
+├── app/                    # Next.js 15 application
+│   ├── api/               # Backend API endpoints
+│   │   ├── chat/          # ML-powered chatbot
+│   │   ├── contact/       # Contact form processing
+│   │   ├── appointments/  # Appointment booking
+│   │   └── newsletter/    # Email subscriptions
+│   ├── (pages)/          # Website pages
+│   └── globals.css       # Global styling
+├── components/            # Reusable UI components
+├── datasets/             # 📊 Product datasets (57,940 items)
+│   ├── jewelry_dataset.csv    # 4,000 jewelry pieces
+│   ├── diamonds_dataset.csv   # 53,940 diamonds
+│   └── README.md              # Dataset documentation
+├── ml-chatbot/           # Machine learning backend
+└── lib/                  # Utilities and helpers
+```
 
-**[https://vercel.com/aditya-ramans-projects-311b9d62/v0-jewellery-website-breakdown](https://vercel.com/aditya-ramans-projects-311b9d62/v0-jewellery-website-breakdown)**
+## 🚀 Features
 
-## Build your app
+### **Frontend Excellence:**
+- ✅ **Premium UI/UX** - Professional jewelry boutique design
+- ✅ **Responsive Design** - Perfect on all devices
+- ✅ **Smooth Animations** - Elegant interactions throughout
+- ✅ **Professional Navigation** - Intuitive user journey
 
-Continue building your app on:
+### **ML-Powered Intelligence:**
+- ✅ **Smart Chatbot** - Product recommendations from 57k+ items
+- ✅ **Dataset Integration** - Real jewelry and diamond specifications
+- ✅ **Intelligent Search** - Advanced matching algorithms
+- ✅ **Educational Responses** - Expert jewelry consultation
 
-**[https://v0.app/chat/projects/hvs2E8Vx2Qb](https://v0.app/chat/projects/hvs2E8Vx2Qb)**
+### **Complete Backend:**
+- ✅ **Contact Forms** - Professional inquiry handling
+- ✅ **Appointment Booking** - Consultation scheduling system
+- ✅ **Newsletter API** - Email subscription management
+- ✅ **Form Validation** - Comprehensive input validation
 
-## How It Works
+### **Content Excellence:**
+- ✅ **Comprehensive Pages** - Bespoke process, collections, materials
+- ✅ **Educational Content** - Gemstone guides, sizing information
+- ✅ **Professional Imagery** - High-quality product galleries
+- ✅ **SEO Optimized** - Search engine friendly structure
 
-1. Create and modify your project using [v0.app](https://v0.app)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+## 📊 Dataset Power
+
+### **57,940 Total Items:**
+- **Jewelry Collection**: 4,000 pieces with specifications
+- **Diamond Database**: 53,940 certified diamonds with 4Cs grading
+- **Professional Data**: Industry-standard pricing and specifications
+- **Real-time Search**: Instant product recommendations
+
+**See [datasets/README.md](./datasets/README.md) for complete documentation**
+
+## 🔧 Technology Stack
+
+- **Frontend**: Next.js 15, React, TypeScript, Tailwind CSS
+- **Backend**: Next.js API Routes, Node.js
+- **ML/AI**: Python, TensorFlow, Scikit-learn, Custom models
+- **Data**: CSV datasets, Professional jewelry/diamond data
+- **Deployment**: Vercel, Production-ready
+
+## 🎯 Business Ready
+
+### **Professional Operations:**
+- **Customer Inquiries**: Contact form with email notifications
+- **Appointment Scheduling**: Consultation booking system
+- **Lead Generation**: Newsletter and contact capture
+- **Product Consultation**: AI-powered product guidance
+
+### **Ready for Database Integration:**
+- **Schema Designed**: Contact, appointments, newsletter tables
+- **API Endpoints**: All backend routes prepared
+- **Admin Dashboard**: Ready for management interface
+- **Analytics Ready**: Data collection infrastructure in place

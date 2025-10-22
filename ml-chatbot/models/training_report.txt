@@ -1,0 +1,36 @@
+================================================================================
+ADVANCED DATASET TRAINING REPORT
+================================================================================
+Generated: 2025-10-17 02:09:12
+
+DATASET SUMMARY:
+----------------------------------------
+Jewelry Dataset: 4000 items
+  - Categories: 4
+  - Price range: $153 - $49,945
+  - Average price: $14,633
+Diamond Dataset: 53940 items
+  - Carat range: 0.20 - 5.01
+  - Price range: $326 - $18,823
+  - Average price: $3,933
+
+MODELS TRAINED:
+----------------------------------------
+  [+] jewelry_clusters
+  [+] jewelry_price_predictor
+  [+] jewelry_style_clusters
+  [+] diamond_clusters
+  [+] diamond_price_predictor
+  [+] diamond_quality_assessor
+
+KEY INSIGHTS:
+----------------------------------------
+  • Average jewelry piece costs $14,633 while average diamond costs $3,933
+  • Price overlap exists between $326 and $18,823
+  • Most popular jewelry category: bracelet
+  • Most expensive metal on average: rose gold
+  • Most popular stone: diamond
+  • Best value jewelry category: earrings
+  • Best value diamond cut: Ideal
+
+================================================================================

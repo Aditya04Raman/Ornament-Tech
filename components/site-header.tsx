@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation"
 export default function SiteHeader() {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
+  
   const links = [
     { href: "/bespoke-process", label: "Bespoke" },
     { href: "/collections", label: "Collections" },
@@ -26,13 +27,14 @@ export default function SiteHeader() {
           Ornament Tech
           <span className="sr-only">Home</span>
         </Link>
+        
         <nav className="hidden md:flex items-center gap-5 text-sm">
-          {links.map((l) => {
-            const isActive = pathname === l.href || (l.href !== "/" && pathname?.startsWith(l.href))
+          {links.map((link) => {
+            const isActive = pathname === link.href || (link.href !== "/" && pathname?.startsWith(link.href))
             return (
               <Link
-                key={l.href}
-                href={l.href}
+                key={link.href}
+                href={link.href}
                 aria-current={isActive ? "page" : undefined}
                 className={
                   isActive
@@ -40,12 +42,13 @@ export default function SiteHeader() {
                     : "text-muted-foreground hover:text-foreground transition-colors"
                 }
               >
-                {l.label}
+                {link.label}
               </Link>
             )
           })}
+          
           <a
-            href="https://wa.me/1234567890"
+            href="https://wa.me/442081549500"
             target="_blank"
             rel="noopener noreferrer"
             className="ml-2 inline-flex items-center gap-1 rounded-md bg-green-600 text-white px-3 py-1.5 text-xs hover:bg-green-700 transition-colors"
@@ -54,6 +57,7 @@ export default function SiteHeader() {
             WhatsApp
           </a>
         </nav>
+
         <button
           className="md:hidden inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm border hover:bg-muted/40 transition-colors"
           onClick={() => setOpen(!open)}
@@ -64,15 +68,16 @@ export default function SiteHeader() {
           Menu
         </button>
       </div>
+
       {open && (
         <nav id="mobile-menu" className="md:hidden border-t bg-background/95 backdrop-blur">
           <div className="mx-auto max-w-6xl px-4 py-3 grid grid-cols-2 gap-3 text-sm">
-            {links.map((l) => {
-              const isActive = pathname === l.href || (l.href !== "/" && pathname?.startsWith(l.href))
+            {links.map((link) => {
+              const isActive = pathname === link.href || (link.href !== "/" && pathname?.startsWith(link.href))
               return (
                 <Link
-                  key={l.href}
-                  href={l.href}
+                  key={link.href}
+                  href={link.href}
                   aria-current={isActive ? "page" : undefined}
                   className={
                     isActive
@@ -80,7 +85,7 @@ export default function SiteHeader() {
                       : "text-muted-foreground hover:text-foreground transition-colors"
                   }
                 >
-                  {l.label}
+                  {link.label}
                 </Link>
               )
             })}
