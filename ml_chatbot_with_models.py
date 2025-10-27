@@ -16,10 +16,17 @@ from flask_cors import CORS
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 try:
+    # Allow opting out of TensorFlow import for environments where it's
+    # incompatible (for example, newer Python versions). Set SKIP_TF=1 to
+    # force the fallback engine.
+    if os.getenv('SKIP_TF', '0') == '1':
+        raise ImportError('SKIP_TF set')
     import tensorflow as tf
     print("✓ TensorFlow loaded")
-except ImportError:
-    print("✗ TensorFlow not available - will use fallback")
+except Exception as e:
+    # Catch any exception (ImportError, ABI mismatch, runtime errors) so the
+    # service can still run in fallback mode without crashing during import.
+    print(f"✗ TensorFlow import failed or skipped ({e}) - will use fallback")
     tf = None
 
 # Ensure stdout can handle Unicode on Windows
@@ -184,6 +191,60 @@ class MLJewelryChatbot:
         text = re.sub(r'[^a-zA-Z0-9\s]', '', text)
         text = ' '.join(text.split())
         return text
+
+    def _is_search_like(self, query: str) -> bool:
+        """Detect if a query is likely asking for product search results."""
+        q = query.lower()
+        # presence of action verbs + product terms or explicit filters (price, metal, carat)
+        if re.search(r'\b(show|find|search|looking for|want|need|browse)\b', q) and re.search(r'\b(ring|necklace|earring|bracelet|jewelry|jewellery|diamond|stone)\b', q):
+            return True
+        if re.search(r'\b(under|below|less than|under\$|<|<=)\b', q) and re.search(r'\$?\d{2,}', q):
+            return True
+        if re.search(r'\b(platinum|gold|silver|rose gold|white gold|metal|titanium)\b', q) and re.search(r'\b(ring|necklace|earring|bracelet|diamond)\b', q):
+            return True
+        return False
+
+    def _is_pricing_like(self, query: str) -> bool:
+        """Detect if a query specifically asks about pricing or value."""
+        q = query.lower()
+        if re.search(r'\b(price|cost|how much|worth|value|range|estimate|quote)\b', q):
+            return True
+        # explicit currency mentions
+        if re.search(r'\$\s?\d{2,}|\d{2,}\s?usd', q):
+            return True
+        return False
+
+    def _is_appointment_like(self, query: str) -> bool:
+        q = query.lower()
+        return bool(re.search(r'\b(appointment|book|schedule|consultation|visit|store|meet)\b', q))
+
+    def _is_shipping_like(self, query: str) -> bool:
+        q = query.lower()
+        return bool(re.search(r'\b(ship|shipping|delivery|international|overseas|courier|express|overnight)\b', q))
+
+    def _is_returns_like(self, query: str) -> bool:
+        q = query.lower()
+        return bool(re.search(r'\b(return|refund|exchange|policy|replace)\b', q))
+
+    def _is_customization_like(self, query: str) -> bool:
+        q = query.lower()
+        return bool(re.search(r'\b(custom|customize|bespoke|design|engrave|modify|personalize)\b', q))
+
+    def _is_sizing_like(self, query: str) -> bool:
+        q = query.lower()
+        return bool(re.search(r'\b(size|sizing|ring size|measure|measurement|fit|resiz)\b', q))
+
+    def _is_care_like(self, query: str) -> bool:
+        q = query.lower()
+        return bool(re.search(r'\b(care|clean|maintain|polish|repair|warranty|tarnish)\b', q))
+
+    def _is_material_like(self, query: str) -> bool:
+        q = query.lower()
+        return bool(re.search(r'\b(gold|silver|platinum|metal|material|titanium|alloy|white gold|rose gold)\b', q))
+
+    def _is_comparison_like(self, query: str) -> bool:
+        q = query.lower()
+        return bool(re.search(r'\b(compare|comparison|difference|differ|better|best|versus|vs|between|which one)\b', q))
     
     def classify_intent_ml(self, query):
         """Use NEURAL NETWORK to classify intent"""
@@ -258,8 +319,8 @@ class MLJewelryChatbot:
         """Answer inventory questions with real data"""
         kb = self.knowledge_base
         
-        response = f"✨ **Our Complete Jewelry Collection**\n\n"
-        response += f"📊 **Total Items:** {kb.get('total_jewelry', 0):,} jewelry pieces\n\n"
+        response = f"**Our Complete Jewelry Collection**\n\n"
+        response += f"**Total Items:** {kb.get('total_jewelry', 0):,} jewelry pieces\n\n"
         
         if kb.get('categories'):
             response += "**Jewelry Categories:**\n"
@@ -279,7 +340,7 @@ class MLJewelryChatbot:
             response += f"\n**Price Range:** ${kb['price_min']:,.0f} - ${kb['price_max']:,.0f}\n"
             response += f"**Average Price:** ${kb['price_avg']:,.0f}\n"
         
-        response += "\n💎 We also have {0:,} certified diamonds in our collection!".format(kb.get('total_diamonds', 0))
+        response += "\n\nWe also have {0:,} certified diamonds in our collection!".format(kb.get('total_diamonds', 0))
         response += "\n\n[ML Engine Active]" if self.ml_models_loaded else "\n\n[Fallback Engine]"
         
         return response
@@ -301,7 +362,7 @@ class MLJewelryChatbot:
         if len(results) == 0:
             return f"I couldn't find exact matches. We have {len(self.jewelry_data):,} pieces total. Try /collections!"
         
-        response = f"🔍 **Found {len(results):,} pieces**\n\n"
+        response = f"**Found {len(results):,} pieces**\n\n"
         
         for idx, item in results.head(5).iterrows():
             response += f"• {item.get('category', 'Jewelry').capitalize()}"
@@ -311,7 +372,7 @@ class MLJewelryChatbot:
                 response += f" - ${item['price']:,.0f}"
             response += "\n"
         
-        response += f"\n📍 Visit /collections to see all {len(results):,} pieces!"
+        response += f"\n\nVisit /collections to see all {len(results):,} pieces!"
         response += "\n\n[ML Engine Active]" if self.ml_models_loaded else "\n\n[Fallback Engine]"
         
         return response
@@ -319,7 +380,7 @@ class MLJewelryChatbot:
     def handle_pricing(self, query):
         """Handle pricing queries"""
         kb = self.knowledge_base
-        response = "💰 **Pricing Information**\n\n"
+        response = "**Pricing Information**\n\n"
         response += f"**Price Range:** ${kb.get('price_min', 0):,.0f} - ${kb.get('price_max', 0):,.0f}\n"
         response += f"**Average Price:** ${kb.get('price_avg', 0):,.0f}\n"
         response += "\n\n[ML Engine Active]" if self.ml_models_loaded else "\n\n[Fallback Engine]"
@@ -328,7 +389,7 @@ class MLJewelryChatbot:
     def handle_education(self, query):
         """Handle gemstone education"""
         kb = self.knowledge_base
-        response = "💎 **Gemstone Education**\n\n"
+        response = "**Gemstone Education**\n\n"
         response += f"We have {kb.get('total_diamonds', 0):,} certified diamonds.\n\n"
         response += "**The 4 Cs of Diamonds:**\n"
         response += "• **Cut**: Determines brilliance\n"
@@ -341,7 +402,7 @@ class MLJewelryChatbot:
     def handle_greeting(self, query):
         """Handle greetings"""
         kb = self.knowledge_base
-        response = f"Hello! 👋 I'm your AI jewelry consultant with knowledge of {kb.get('total_jewelry', 0):,} jewelry pieces and {kb.get('total_diamonds', 0):,} diamonds."
+        response = f"Hello! I'm your AI jewelry consultant with knowledge of {kb.get('total_jewelry', 0):,} jewelry pieces and {kb.get('total_diamonds', 0):,} diamonds."
         if self.ml_models_loaded:
             response += " My responses are powered by trained neural networks. "
         response += " What interests you today?"
@@ -354,6 +415,109 @@ class MLJewelryChatbot:
         response += "Try asking about:\n• Specific jewelry types (rings, necklaces, etc.)\n• Pricing and budgets\n• Gemstone education\n• Materials and metals"
         response += "\n\n[ML Engine Active]" if self.ml_models_loaded else "\n\n[Fallback Engine]"
         return response
+
+    def handle_appointment(self, query):
+        """Handle booking and appointments"""
+        response = (
+            "Appointments and consultations:\n"
+            "• Engagement ring consultations: 90 minutes\n"
+            "• Custom design sessions: 60 minutes\n"
+            "• Browsing visits: 30 minutes\n"
+            "• Appraisals: 30 minutes\n\n"
+            "How to book: Visit /appointments or contact us to schedule a time."
+        )
+        response += "\n\n[ML Engine Active]" if self.ml_models_loaded else "\n\n[Fallback Engine]"
+        return response
+
+    def handle_shipping(self, query):
+        """Handle shipping questions"""
+        response = (
+            "Shipping options:\n"
+            "• Standard: 5-7 business days (free over $500)\n"
+            "• Express: 2-3 business days ($25)\n"
+            "• Overnight: next business day ($50)\n\n"
+            "International shipping: Available with insurance and tracking."
+        )
+        response += "\n\n[ML Engine Active]" if self.ml_models_loaded else "\n\n[Fallback Engine]"
+        return response
+
+    def handle_returns(self, query):
+        """Handle returns and exchanges"""
+        response = (
+            "Returns and exchanges:\n"
+            "• 30-day returns for unaltered items with original packaging\n"
+            "• Exchanges available; lifetime exchange options for eligible items\n"
+            "• Custom/bespoke items: non-refundable after design approval; modifications available"
+        )
+        response += "\n\n[ML Engine Active]" if self.ml_models_loaded else "\n\n[Fallback Engine]"
+        return response
+
+    def handle_customization(self, query):
+        """Handle bespoke/custom design questions"""
+        response = (
+            "Custom and bespoke process (typical 6-8 weeks):\n"
+            "1) Consultation and brief\n"
+            "2) Design concepts and approvals\n"
+            "3) Stone and metal selection\n"
+            "4) Crafting and quality checks\n"
+            "5) Delivery and fit\n\n"
+            "Engraving and modifications available. Book at /appointments."
+        )
+        response += "\n\n[ML Engine Active]" if self.ml_models_loaded else "\n\n[Fallback Engine]"
+        return response
+
+    def handle_sizing(self, query):
+        """Handle sizing questions"""
+        response = (
+            "Sizing guides:\n"
+            "• Rings: sizes typically 4-13; measure using a ring sizer or an existing ring\n"
+            "• Necklaces: common lengths 16, 18, 20, 24 inches\n"
+            "• Bracelets: measure wrist and add 0.5 to 1 inch for comfort\n\n"
+            "See /sizing for details and printable guides."
+        )
+        response += "\n\n[ML Engine Active]" if self.ml_models_loaded else "\n\n[Fallback Engine]"
+        return response
+
+    def handle_care(self, query):
+        """Handle care and maintenance"""
+        response = (
+            "Care and maintenance:\n"
+            "• Clean gently with mild soap and a soft brush\n"
+            "• Avoid harsh chemicals and store items separately\n"
+            "• Annual professional cleaning recommended\n"
+            "• Pearls and soft stones: wipe with a soft cloth after wear"
+        )
+        response += "\n\n[ML Engine Active]" if self.ml_models_loaded else "\n\n[Fallback Engine]"
+        return response
+
+    def handle_material(self, query):
+        """Handle material questions (gold, platinum, silver)"""
+        q = query.lower()
+        if 'platinum' in q:
+            note = "Platinum: naturally white, durable, hypoallergenic; typically higher cost."
+        elif 'gold' in q:
+            note = "Gold: available in yellow/white/rose; 14k is durable and affordable; 18k is richer in color."
+        elif 'silver' in q:
+            note = "Silver: bright and affordable; may tarnish over time; polish periodically."
+        else:
+            note = "Materials include gold (yellow/white/rose), platinum, and silver. Choose based on color, durability, and budget."
+        response = f"Material information: {note}"
+        response += "\n\n[ML Engine Active]" if self.ml_models_loaded else "\n\n[Fallback Engine]"
+        return response
+
+    def handle_comparison(self, query):
+        """Handle comparisons like gold vs platinum"""
+        q = query.lower()
+        segments = []
+        if 'gold' in q and 'platinum' in q:
+            segments.append("Gold vs Platinum: gold offers color options and value; platinum is denser, hypoallergenic, and maintains a white tone.")
+        if 'silver' in q and ('gold' in q or 'platinum' in q):
+            segments.append("Silver vs Gold/Platinum: silver is most affordable but prone to tarnish; gold/platinum are premium and longer lasting.")
+        if not segments:
+            segments.append("Comparison factors: color, durability, maintenance, budget, and style preferences.")
+        response = " ".join(segments)
+        response += "\n\n[ML Engine Active]" if self.ml_models_loaded else "\n\n[Fallback Engine]"
+        return response
     
     def generate_response(self, query):
         """Generate response using ML or fallback"""
@@ -364,6 +528,12 @@ class MLJewelryChatbot:
             'search': self.handle_search,
             'pricing': self.handle_pricing,
             'education': self.handle_education,
+            'material': self.handle_material,
+            'comparison': self.handle_comparison,
+            'customization': self.handle_customization,
+            'sizing': self.handle_sizing,
+            'care': self.handle_care,
+            'appointment': self.handle_appointment,
             'diamond_info': self.handle_education,
             'greeting': self.handle_greeting,
             'gratitude': lambda q: "You're welcome! Feel free to ask anything.",
@@ -408,16 +578,83 @@ def chat():
 
         if ml_pred:
             intent_ml, confidence_ml = ml_pred
-            # Use ML pipeline (always prefer ML when a prediction exists)
+            # Use ML pipeline (prefer ML). However, ensure the reply is related to the
+            # user's query: if the ML model returns a generic/educational intent but the
+            # query clearly requests a search or pricing result, reroute to the
+            # dataset-backed handlers so the response is dataset-grounded and relevant.
+
+            # Heuristic override: detect concrete intents and override if ML intent is wrong or low confidence
+            q_lower = message.lower()
+            overridden = False
+
+            # Greeting detection - highest priority (allow trailing words like "there", "everyone")
+            if re.match(r'^\s*(hi|hello|hey|greetings|good\s+(morning|afternoon|evening))(\s+(there|everyone|folks))?\s*[!.?]*\s*$', q_lower, re.IGNORECASE):
+                intent_ml = 'greeting'
+                overridden = True
+            # Inventory questions
+            elif re.search(r'\b(what|which).*(type|kind|category|have|stock|inventory|offer|collection)', q_lower):
+                intent_ml = 'inventory'
+                overridden = True
+            # Specific domain intents
+            elif chatbot._is_appointment_like(q_lower):
+                intent_ml = 'appointment'
+                overridden = True
+            elif chatbot._is_shipping_like(q_lower):
+                intent_ml = 'shipping'
+                overridden = True
+            elif chatbot._is_returns_like(q_lower):
+                intent_ml = 'returns'
+                overridden = True
+            elif chatbot._is_customization_like(q_lower):
+                intent_ml = 'customization'
+                overridden = True
+            elif chatbot._is_sizing_like(q_lower):
+                intent_ml = 'sizing'
+                overridden = True
+            elif chatbot._is_care_like(q_lower):
+                intent_ml = 'care'
+                overridden = True
+            elif chatbot._is_comparison_like(q_lower):
+                intent_ml = 'comparison'
+                overridden = True
+            elif chatbot._is_material_like(q_lower):
+                intent_ml = 'material'
+                overridden = True
+            # Search/pricing overrides for low confidence or generic/wrong intents
+            elif intent_ml in ('education', 'general', 'diamond_info', 'general_info', 'custom_design', 'ring_info', 'jewelry_info') or confidence_ml < 0.75:
+                if chatbot._is_search_like(q_lower):
+                    intent_ml = 'search'
+                    overridden = True
+                elif chatbot._is_pricing_like(q_lower):
+                    intent_ml = 'pricing'
+                    overridden = True
+            
+            if overridden:
+                print(f"[HEURISTIC OVERRIDE] ML->'{intent_ml}' for query: {q_lower}")
+            
+            # Map ML model intents to handler functions
             handlers = {
+                # Direct mappings
                 'inventory': chatbot.handle_inventory,
                 'search': chatbot.handle_search,
                 'pricing': chatbot.handle_pricing,
                 'education': chatbot.handle_education,
+                'material': chatbot.handle_material,
+                'comparison': chatbot.handle_comparison,
+                'customization': chatbot.handle_customization,
+                'sizing': chatbot.handle_sizing,
+                'care': chatbot.handle_care,
+                'appointment': chatbot.handle_appointment,
                 'diamond_info': chatbot.handle_education,
                 'greeting': chatbot.handle_greeting,
                 'gratitude': lambda q: "You're welcome! Feel free to ask anything.",
                 'general': chatbot.handle_general,
+                # ML model intent mappings
+                'general_info': chatbot.handle_general,
+                'jewelry_info': chatbot.handle_search,  # jewelry_info -> search handler
+                'ring_info': chatbot.handle_search,     # ring_info -> search handler
+                'custom_design': chatbot.handle_customization, # custom_design -> customization handler
+                'care': chatbot.handle_care,                   # care -> care handler
             }
 
             handler = handlers.get(intent_ml, chatbot.handle_general)
@@ -440,6 +677,12 @@ def chat():
             'search': chatbot.handle_search,
             'pricing': chatbot.handle_pricing,
             'education': chatbot.handle_education,
+            'material': chatbot.handle_material,
+            'comparison': chatbot.handle_comparison,
+            'customization': chatbot.handle_customization,
+            'sizing': chatbot.handle_sizing,
+            'care': chatbot.handle_care,
+            'appointment': chatbot.handle_appointment,
             'diamond_info': chatbot.handle_education,
             'greeting': chatbot.handle_greeting,
             'gratitude': lambda q: "You're welcome! Feel free to ask anything.",

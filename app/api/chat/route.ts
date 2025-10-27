@@ -398,6 +398,38 @@ function summarizeSet(title: string, set: any[], limit = 4) {
   return s + '\n'
 }
 
+// --- Simple fuzzy matching helpers for short/typoed queries ---
+function levenshtein(a: string, b: string): number {
+  const m = a.length
+  const n = b.length
+  const dp = Array.from({ length: m + 1 }, () => new Array<number>(n + 1).fill(0))
+  for (let i = 0; i <= m; i++) dp[i][0] = i
+  for (let j = 0; j <= n; j++) dp[0][j] = j
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1
+      dp[i][j] = Math.min(
+        dp[i - 1][j] + 1, // deletion
+        dp[i][j - 1] + 1, // insertion
+        dp[i - 1][j - 1] + cost // substitution
+      )
+    }
+  }
+  return dp[m][n]
+}
+
+function isLike(text: string, keywords: string[], maxDistance = 2): boolean {
+  const q = text.toLowerCase().trim()
+  const tokens = q.split(/\s+/)
+  for (const kw of keywords) {
+    const k = kw.toLowerCase()
+    if (q.includes(k)) return true
+    if (tokens.includes(k)) return true
+    if (tokens.length === 1 && levenshtein(q, k) <= maxDistance) return true
+  }
+  return false
+}
+
 function buildSmartReply(input: string): string {
   const { filtered, entities, budget, all } = filterProductsAdvanced(input)
 
@@ -504,7 +536,37 @@ async function getMLResponse(userInput: string): Promise<string | null> {
 type Engine = 'ml' | 'dataset'
 
 async function buildIntelligentReply(input: string): Promise<{ text: string; engine: Engine }> {
-  // Try ML response first
+  const q = input.toLowerCase().trim()
+  
+  // FORCE dataset engine for single-word section queries (even if ML is available)
+  // This prevents ML from incorrectly classifying section names as product searches
+  const sectionKeywords = [
+    'appointments', 'appointment', 'consultation', 'consult', 'book', 'visit', 'appointents',
+    'journal', 'journals', 'articles', 'blog', 'guides', 'stories',
+    'about', 'brand', 'story', 'values',
+    'contact', 'email', 'phone', 'support', 'whatsapp',
+    'gallery', 'galleries', 'photos', 'images', 'editorial',
+    'care', 'cleaning', 'maintenance', 'service', 'repair', 'resize',
+    'stores', 'store', 'location', 'locations', 'studio', 'boutique', 'address',
+    'faq', 'questions', 'warranty', 'guarantee', 'returns', 'return',
+    'craftsmanship', 'handmade', 'artisan', 'atelier', 'workshop',
+    'bespoke', 'bespoke-process', 'process',
+    'collections', 'collection', 'catalog',
+    'materials', 'material', 'metals',
+    'gemstones', 'gemstone', 'diamonds',
+    'sizing', 'size', 'measurement'
+  ]
+  
+  const tokens = q.split(/\s+/)
+  const isSingleWordSection = tokens.length === 1 && sectionKeywords.some(kw => isLike(q, [kw]))
+  const isSectionQuery = sectionKeywords.some(kw => q.includes(kw) || isLike(q, [kw]))
+  
+  if (isSingleWordSection || isSectionQuery) {
+    // Skip ML for section queries - use dataset engine directly
+    return { text: buildRuleBasedResponse(input), engine: 'dataset' }
+  }
+  
+  // Try ML response first for other queries
   const mlResponse = await getMLResponse(input)
   
   if (mlResponse) {
@@ -512,8 +574,8 @@ async function buildIntelligentReply(input: string): Promise<{ text: string; eng
   }
   
   // Fall back to smarter dataset-backed routing if ML fails
-  const q = input.toLowerCase()
-  if (/(compare|vs|versus|which is better|which one)/.test(q)) {
+  const q2 = input.toLowerCase()
+  if (/(compare|vs|versus|which is better|which one)/.test(q2)) {
     return { text: buildSmartReply(input), engine: 'dataset' }
   }
   return { text: buildRuleBasedResponse(input), engine: 'dataset' }
@@ -611,6 +673,263 @@ function buildRuleBasedResponse(input: string): string {
     return "You're very welcome! I'm here whenever you need guidance on jewelry selection, gemstone education, or design consultation. Feel free to ask me anything about our collections or book a personal appointment at /appointments."
   }
 
+  // Journal and editorial content
+  if (/(journal|article|blog|guide|story|stories)/i.test(q) || isLike(q, ['journal', 'journals', 'articles', 'blog', 'guides', 'stories'])) {
+    return `📝 Journal & Editorial
+
+Our journal explores design inspiration, craftsmanship behind the scenes, gemstone education, and care tips. A few popular reads:
+
+• How to choose the right diamond shape for your style
+• Behind the craft: from sketch to finished ring
+• Caring for heirloom jewelry: do's and don'ts
+• Metal matters: platinum vs. gold explained
+
+Browse all posts at /journal. Tell me what topic you’re interested in and I can summarize or point you to the best article.`
+  }
+
+  // About the brand
+  if (/(about|your story|who are you|values|brand)/i.test(q) || isLike(q, ['about', 'brand', 'story', 'values'])) {
+    return `About Ornament Tech
+
+We’re a bespoke jewelry atelier where traditional craftsmanship meets modern technology. Our focus is:
+• Bespoke design: from concept to creation with you
+• Master craftsmanship: handmade pieces with precision
+• Ethical materials: responsibly sourced gemstones and metals
+
+Learn more at /about or ask me about our bespoke process and services.`
+  }
+
+  // Contact and support
+  if (/(contact|email|phone|call|whatsapp|support|reach you)/i.test(q) || isLike(q, ['contact', 'email', 'phone', 'support', 'whatsapp'])) {
+    return `Contact Us
+
+• Email: hello@ornamenttech.com
+• Phone: +44 20 8154 9500
+• WhatsApp: https://wa.me/1234567890
+
+You can also reach us via the form at /contact. If you’d like, I can help you book a consultation at /appointments.`
+  }
+
+  // Galleries and imagery
+  if (/(gallery|galleries|photos|images|editorial)/i.test(q) || isLike(q, ['gallery', 'galleries', 'photos', 'images', 'editorial'])) {
+    return `Galleries
+
+Explore editorial-quality photography of our work, from engagement rings to bespoke creations. Visit /galleries for high-resolution imagery, or ask me to guide you to pieces that match your taste.`
+  }
+
+  // Care and maintenance
+  if (/(care|clean|cleaning|maintenance|polish|service|repair|resize|refinish)/i.test(q) || isLike(q, ['care', 'cleaning', 'maintenance', 'service', 'repair', 'resize'])) {
+    return `Jewelry Care & Services
+
+• Cleaning: Warm water, mild soap, and a soft brush; dry with lint-free cloth
+• Storage: Separate pouches or compartments to avoid scratches
+• Professional check: Annual prong and setting inspection recommended
+• Resizing and repairs: Available by appointment
+
+See our full guidance at /care, or book a maintenance appointment at /appointments.`
+  }
+
+  // Stores and locations
+  if (/(store|stores|location|locations|studio|boutique|address|where are you)/i.test(q) || isLike(q, ['stores', 'store', 'location', 'locations', 'studio', 'boutique', 'address'])) {
+    return `Studios & Boutiques
+
+• London Studio: 69 Regent's Park Road, Primrose Hill, London NW1 8UY (020 8154 9500)
+• Cambridge Boutique: 6/7 Green Street, Cambridge CB2 3JU (01223 461333)
+
+Plan your visit at /stores or book a consultation at /appointments (in-person or virtual).`
+  }
+
+  // FAQ and quick answers
+  if (/(faq|questions|lead time|leadtime|warranty|guarantee|returns?)/i.test(q) || isLike(q, ['faq', 'questions', 'warranty', 'guarantee', 'returns', 'return'])) {
+    return `FAQ Highlights
+
+• Lead times: Bespoke projects typically take 4–8 weeks depending on complexity
+• Ring resizing: Yes, we provide professional sizing and aftercare
+• Warranty: Lifetime guarantee covering craftsmanship and materials
+• Returns: See policy details at /faq or ask me about a specific case
+
+Read more at /faq, or share your specific question and I’ll answer directly.`
+  }
+
+  // Craftsmanship and techniques
+  if (/(craftsmanship|technique|handmade|artisan|atelier|workshop)/i.test(q) || isLike(q, ['craftsmanship', 'handmade', 'artisan', 'atelier', 'workshop'])) {
+    return `Craftsmanship
+
+Every piece is handmade by our artisans using traditional techniques alongside modern precision. From hand-drawn sketches and CAD to careful stone setting and finishing, we obsess over detail.
+
+Learn more at /craftsmanship or ask about the steps from concept to creation.`
+  }
+
+  // Bespoke process
+  if (/(bespoke|custom|design|process)/i.test(q) && /(process|journey|how|steps|bespoke)/i.test(q) || isLike(q, ['bespoke', 'bespoke-process', 'process'])) {
+    return `✨ Bespoke Design Process
+
+From concept to creation, a guided journey tailored to you:
+
+**1. Consultation** (Week 1)
+• Share your vision and story with our designers
+• Discuss budget, timeline, and unique inspirations
+
+**2. Design** (Weeks 2-3)
+• Hand-drawn sketches and 3D CAD models
+• Refine every detail together until perfect
+
+**3. Craft** (Weeks 4-8)
+• Master craftspeople bring your design to life
+• Traditional techniques with modern precision
+• Photo updates during creation
+
+**4. Delivery** (Week 9)
+• Rigorous quality checks
+• Personal presentation in signature packaging
+• Lifetime care and aftercare guidance
+
+Typical timeline: 4-8 weeks depending on complexity.
+
+Explore the complete process at /bespoke-process or start with a free consultation at /appointments.`
+  }
+
+  // Collections
+  if (/(collections?|browse|catalog|pieces|designs)/i.test(q) && !/(what|types|kinds|categories)/i.test(q) || isLike(q, ['collections', 'collection', 'catalog'])) {
+    return `🎨 Our Collections
+
+Discover carefully curated designs across all categories:
+
+**Bridal Collection**
+• Engagement rings: 50+ designs from £2,500
+• Wedding bands: 40+ designs from £800
+
+**Fine Jewelry**
+• Necklaces: 35+ designs from £1,200
+• Earrings: 45+ designs from £600
+• Bracelets and statement pieces
+
+**Signature Collections**
+• Heritage Collection: 30+ timeless designs from £1,800
+• Limited editions and artist collaborations
+
+Every piece features ethically sourced materials with full traceability and award-winning craftsmanship.
+
+Browse all at /collections or view high-resolution imagery at /galleries. Book an appointment at /appointments to see pieces in person.`
+  }
+
+  // Materials and metals (explicit priority)
+  if (/(materials?|metals?|platinum|gold)/i.test(q) && /(guide|about|what|learn|tell me|explain)/i.test(q) || isLike(q, ['materials', 'material', 'metals'])) {
+    return `⚡ Material Selection Guide
+
+Choosing the right metal affects both beauty and durability:
+
+**Platinum** (Premium Choice)
+• Naturally white, hypoallergenic, extremely durable
+• Develops beautiful patina while maintaining strength
+• Best for: Engagement rings, daily wear
+
+**18K Gold Options**
+• Yellow Gold: Classic warm tone, traditional choice
+• White Gold: Modern bright finish, rhodium-plated
+• Rose Gold: Romantic blush tone, vintage appeal
+• All offer excellent durability
+
+**14K Gold**
+• More affordable option with good durability
+• Available in all color options
+
+**Selection Tips:**
+• Consider skin tone and personal style
+• Match existing jewelry if desired
+• Think about maintenance preferences and lifestyle
+
+Learn more at /materials or discuss options during a consultation at /appointments.`
+  }
+
+  // Gemstones (explicit priority)
+  if (/(gemstones?|diamonds?|sapphires?|emeralds?|rubies?)/i.test(q) && /(learn|about|education|guide|what)/i.test(q) || isLike(q, ['gemstones', 'gemstone', 'diamonds'])) {
+    return `💎 Gemstone Education
+
+**Diamonds** - Understand the 4Cs
+• Cut: Determines brilliance and sparkle (most important)
+• Color: D-F colorless, G-J near colorless
+• Clarity: VS1-VS2 excellent value, SI1-SI2 good value
+• Carat: Size preference within budget
+
+**Colored Gemstones**
+• Sapphire: Exceptional hardness, available in many colors
+• Ruby: Intense red corundum, symbol of love and passion
+• Emerald: Vivid green beryl with natural character
+• Tanzanite: Rare blue-violet, found only in Tanzania
+
+**Our Promise:**
+• Ethically sourced with full traceability
+• Expert guidance on quality and value
+• Certification for all diamonds
+
+Learn more at /gemstones or book a consultation at /appointments to see gemstones in person and understand quality differences.`
+  }
+
+  // Sizing guide (explicit priority)
+  if (/(sizing|size|measure|fit)/i.test(q) && /(ring|guide|how)/i.test(q) || isLike(q, ['sizing', 'size', 'measurement'])) {
+    return `📏 Ring Sizing Guide
+
+Proper sizing ensures comfort and security:
+
+**Professional Sizing** (Recommended)
+• Visit our studio for precise measurement
+• We account for knuckle size and finger changes
+• Consider time of day (fingers swell in warmth)
+
+**At-Home Methods**
+• Use our printable sizing tools at /sizing
+• String or paper wrap method
+• Compare with existing rings
+
+**Important Considerations:**
+• Wider bands feel tighter than thin bands
+• Fingers change with temperature and activity
+• Different fingers may vary in size
+• Pregnancy and weight changes affect sizing
+
+**Our Promise:**
+• Free sizing within 30 days of purchase
+• Lifetime resize services available
+• Emergency sizing appointments
+
+Visit /sizing for detailed guides, printable tools, and international conversions, or book an appointment at /appointments for professional fitting.`
+  }
+
+  // PRIORITY: Appointments/consultation booking (check before product searches)
+  if (q.includes("book") || q.includes("appointment") || q.includes("consultation") || q.includes("visit") || isLike(q, ['appointments', 'appointment', 'consultation', 'consult', 'book', 'visit', 'appointents'])) {
+    return `📅 **Book Your Personal Consultation**
+
+Experience personalized service with our jewelry experts:
+
+**Consultation Options**:
+• **In-Person**: Full sensory experience with our collection
+• **Virtual**: Convenient video consultation
+• **Phone**: Quick guidance and questions
+
+**What to Expect**:
+• 60-90 minute dedicated time
+• Expert guidance on all aspects
+• See diamonds and gemstones up close
+• Discuss customization options
+• No pressure, educational focus
+
+**Popular Consultation Topics**:
+• Engagement ring selection
+• Custom design development
+• Gemstone education
+• Investment and value guidance
+• Care and maintenance tips
+
+**Preparation Tips**:
+• Bring inspiration photos
+• Consider your lifestyle needs
+• Think about budget parameters
+• List any questions
+
+Book your consultation at /appointments - it's complimentary and there's no obligation.`
+  }
+
   // Enhanced product searches with better context (relaxed matching)
   if (
     /(ring|necklace|earring|bracelet|pendant|chain|diamond|ruby|emerald|sapphire|gemstone|gold|silver|platinum)/i.test(q) ||
@@ -647,30 +966,67 @@ function buildRuleBasedResponse(input: string): string {
     return `💎 **Gemstone Guidance**\n\nWe specialize in both diamonds and colored gemstones:\n\n**Diamonds**: Classic choice, maximum brilliance\n**Sapphires**: Available in many colors, excellent durability\n**Emeralds**: Vivid green, symbol of renewal\n**Rubies**: Passionate red, symbol of love\n\nEach gemstone has unique characteristics and grading criteria. Visit /gemstones for detailed information or book a consultation at /appointments for hands-on education.`
   }
 
-  // Top intents → enhanced responses with more guidance
-  if (q.includes("bespoke") || q.includes("custom") || q.includes("design")) {
-    return `✨ **Bespoke Design Process**\n\nCreating a custom piece is our specialty! Here's your journey:\n\n**1. Consultation** (Free)\n• Discuss your vision and inspiration\n• Review design options and materials\n• Understand timeline and investment\n\n**2. Design Development**\n• Sketch concepts and CAD renderings\n• Select gemstones and metals\n• Refine every detail together\n\n**3. Master Craftsmanship**\n• Hand-crafted by our artisans\n• Quality checkpoints throughout\n• Photo updates during creation\n\n**4. Delivery & Aftercare**\n• Personal presentation\n• Lifetime care guidance\n• Resize and maintenance services\n\nExplore the complete process at /bespoke-process or start with a consultation at /appointments.`
-  }
-
-  if (q.includes("collection") || q.includes("browse") || q.includes("show me")) {
-    return `🎨 **Our Collections**\n\nDiscover carefully curated designs across all categories:\n\n**Bridal Collection**:\n• Engagement rings: Solitaires, halos, vintage styles\n• Wedding bands: Classic, diamond, unique designs\n\n**Fine Jewelry**:\n• Necklaces: Delicate chains to statement pieces\n• Earrings: Studs, drops, chandelier styles\n• Bracelets: Tennis, bangles, charm styles\n\n**Signature Pieces**:\n• Limited edition designs\n• Artist collaborations\n• Heirloom-quality statement jewelry\n\nBrowse collections at /collections or see high-resolution imagery at /galleries. Book an appointment at /appointments to view pieces in person.`
-  }
-
+  // Price and investment guidance (kept as it's more specific than materials/collections)
   if (q.includes("price") || q.includes("cost") || q.includes("budget") || q.includes("investment")) {
     return `💰 **Investment Guidance**\n\nFine jewelry is a significant investment. Here's helpful guidance:\n\n**Engagement Rings**:\n• $2,000-$5,000: Beautiful options with excellent value\n• $5,000-$10,000: Premium quality and size\n• $10,000+: Exceptional stones and settings\n\n**Wedding Bands**:\n• $800-$2,000: Classic styles in quality metals\n• $2,000+: Diamond or intricate designs\n\n**Fine Jewelry**:\n• Varies by piece, materials, and gemstones\n• Custom designs quoted individually\n\n**Value Factors**:\n• Quality of materials and craftsmanship\n• Timeless design vs. trendy styles\n• Certification and warranties\n\nFor specific pricing, visit /faq or book a consultation at /appointments for personalized guidance within your budget.`
   }
 
-  // Continue with other enhanced responses...
-  if (q.includes("material") || q.includes("metal") || q.includes("platinum") || q.includes("gold")) {
-    return `⚡ **Metal Selection Guide**\n\nChoosing the right metal affects both beauty and durability:\n\n**Platinum** (Premium Choice):\n• Naturally white, won't tarnish\n• Hypoallergenic and pure\n• Most durable for daily wear\n• Investment-grade quality\n\n**18k Gold Options**:\n• White Gold: Classic, rhodium-plated finish\n• Yellow Gold: Traditional, warm appearance\n• Rose Gold: Romantic, trending choice\n• All excellent durability\n\n**14k Gold**:\n• More affordable option\n• Good durability for active lifestyles\n• Available in all color options\n\n**Selection Tips**:\n• Consider skin tone and personal style\n• Match existing jewelry if desired\n• Think about maintenance preferences\n\nLearn more at /materials or discuss options during a consultation at /appointments.`
+  // Budget-specific jewelry queries (e.g., "rings under $5000", "necklaces under £2000")
+  if (/(under|below|less than|budget|affordable|cheap|inexpensive)/i.test(q) && 
+      /(ring|necklace|earring|bracelet|jewelry|jewellery|diamond|engagement|wedding)/i.test(q) ||
+      /\$\d+|\£\d+|budget of/i.test(q)) {
+    const { filtered, entities, budget, all } = filterProductsAdvanced(input)
+    
+    if (filtered.length > 0) {
+      // Show actual filtered products
+      let response = `💎 **Budget-Friendly ${entities.categories.length ? entities.categories[0] + 's' : 'Jewelry'}**\n\n`
+      
+      if (budget.max) {
+        response += `Showing pieces under $${budget.max.toLocaleString()}:\n\n`
+      }
+      
+      filtered.slice(0, 4).forEach((product, index) => {
+        if (product.source === 'diamond_kaggle') {
+          response += `**${index + 1}. ${product.name}** - $${product.price.toLocaleString()}\n`
+          response += `   ✨ ${product.carat} carat ${product.cut} cut diamond\n`
+          response += `   💎 ${product.color} color, ${product.clarity} clarity\n\n`
+        } else {
+          response += `**${index + 1}. ${product.name}** - $${product.price.toLocaleString()}\n`
+          response += `   ⚡ ${product.metal || 'Premium metal'}\n`
+          response += `   💫 ${product.stone || 'Quality stones'}\n\n`
+        }
+      })
+      
+      response += `Browse more at /collections or book a consultation at /appointments for personalized recommendations!`
+      return response
+    } else {
+      // Fallback if no matches found
+      const maxPrice = budget.max || 5000
+      return `💎 **Budget Search Results**\n\nI searched our collection but didn't find exact matches under $${maxPrice.toLocaleString()}. However, we have many beautiful pieces in this range!\n\n**Popular Options**:\n• Engagement rings: $2,000-$5,000\n• Wedding bands: $800-$2,000\n• Fine jewelry: $600-$3,000\n\nTell me more about what you're looking for (style, metal, stone) and I'll find the perfect pieces!\n\nBrowse our collection at /collections or book a consultation at /appointments.`
+    }
   }
 
-  if (q.includes("size") || q.includes("sizing") || q.includes("measure") || q.includes("fit")) {
-    return `📏 **Ring Sizing Guidance**\n\nProper sizing ensures comfort and security:\n\n**Professional Sizing** (Recommended):\n• Visit our studio for precise measurement\n• Consider finger changes throughout day\n• Account for knuckle size vs. finger base\n\n**At-Home Methods**:\n• Use our sizing guide at /sizing\n• String or paper wrap method\n• Existing ring comparison\n\n**Important Considerations**:\n• Fingers change size with temperature\n• Wider bands feel tighter\n• Different fingers may vary in size\n• Pregnancy and weight changes affect sizing\n\n**Our Promise**:\n• Free sizing within 30 days\n• Lifetime resize services available\n• Emergency sizing appointments\n\nVisit /sizing for detailed guides or book an appointment at /appointments for professional fitting.`
-  }
+  // Single-word quick nav if unknown
+  const tokenCount = q.trim().split(/\s+/).filter(Boolean).length
+  if (tokenCount === 1 && q.length <= 20) {
+    return `Quick Navigation:
 
-  if (q.includes("book") || q.includes("appointment") || q.includes("consultation") || q.includes("visit")) {
-    return `📅 **Book Your Personal Consultation**\n\nExperience personalized service with our jewelry experts:\n\n**Consultation Options**:\n• **In-Person**: Full sensory experience with our collection\n• **Virtual**: Convenient video consultation\n• **Phone**: Quick guidance and questions\n\n**What to Expect**:\n• 60-90 minute dedicated time\n• Expert guidance on all aspects\n• See diamonds and gemstones up close\n• Discuss customization options\n• No pressure, educational focus\n\n**Popular Consultation Topics**:\n• Engagement ring selection\n• Custom design development\n• Gemstone education\n• Investment and value guidance\n• Care and maintenance tips\n\n**Preparation Tips**:\n• Bring inspiration photos\n• Consider your lifestyle needs\n• Think about budget parameters\n• List any questions\n\nBook your consultation at /appointments - it's complimentary and there's no obligation.`
+📅 Appointments: /appointments
+📝 Journal: /journal
+💍 Collections: /collections
+⚡ Materials: /materials
+💎 Gemstones: /gemstones
+📏 Sizing: /sizing
+✨ Bespoke Process: /bespoke-process
+🎨 Galleries: /galleries
+🔧 Care: /care
+🏪 Stores: /stores
+🏛️ About: /about
+📞 Contact: /contact
+❓ FAQ: /faq
+🛠️ Craftsmanship: /craftsmanship
+
+Tell me a section name or ask a question (e.g., "engagement rings under $5k", "how does bespoke work?").`
   }
 
   // Default enhanced response

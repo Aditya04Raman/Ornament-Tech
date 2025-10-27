@@ -16,8 +16,6 @@ export default function ChatWidget() {
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [isTyping, setIsTyping] = useState(false)
-  const [engine, setEngine] = useState<'ml' | 'dataset' | 'unknown'>('unknown')
-  const [mlStatus, setMlStatus] = useState<'ok' | 'down' | 'checking'>('checking')
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const scrollToBottom = () => {
@@ -28,33 +26,8 @@ export default function ChatWidget() {
     scrollToBottom()
   }, [messages])
 
-  // Poll ML health every 5 seconds
-  useEffect(() => {
-    let mounted = true
-    async function checkMl() {
-      setMlStatus('checking')
-      try {
-        const r = await fetch('/api/ml-health')
-        if (!mounted) return
-        if (r.ok) {
-          const data = await r.json()
-          if (data?.status === 'ok' && data.ml?.ml_models_loaded) {
-            setMlStatus('ok')
-          } else {
-            setMlStatus('down')
-          }
-        } else {
-          setMlStatus('down')
-        }
-      } catch (e) {
-        if (!mounted) return
-        setMlStatus('down')
-      }
-    }
-    checkMl()
-    const id = setInterval(checkMl, 5000)
-    return () => { mounted = false; clearInterval(id) }
-  }, [])
+  // Removed ML health polling and engine status display per request
+  useEffect(() => {}, [])
 
   const sendMessage = async (content: string) => {
     if (!content.trim()) return
@@ -109,8 +82,10 @@ export default function ChatWidget() {
               if (line.startsWith('data: ')) {
                 try {
                   const data = JSON.parse(line.slice(6))
+                  // Dev visibility: surface which engine produced the reply without showing UI badges
                   if (data.engine && (data.engine === 'ml' || data.engine === 'dataset')) {
-                    setEngine(data.engine)
+                    // eslint-disable-next-line no-console
+                    console.info('[chat]', 'engine:', data.engine)
                   }
                   if (data.content && data.content[0]?.text) {
                     setMessages(prev => prev.map(m => 
@@ -215,15 +190,6 @@ export default function ChatWidget() {
                   <div className="text-sm text-white/80 flex items-center gap-2 items-center">
                     <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
                     <span>Online • Ready to assist</span>
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs bg-white/20">
-                      <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
-                        <circle cx="12" cy="12" r="10" />
-                      </svg>
-                      Engine: {engine === 'unknown' ? 'detecting…' : engine.toUpperCase()}
-                    </span>
-                    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs ${mlStatus === 'ok' ? 'bg-green-600' : mlStatus === 'checking' ? 'bg-yellow-500' : 'bg-red-500'}`}>
-                      {mlStatus === 'ok' ? 'ML: Online' : mlStatus === 'checking' ? 'ML: Checking...' : 'ML: Offline'}
-                    </span>
                   </div>
                 </div>
               </div>

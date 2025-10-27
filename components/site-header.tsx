@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation"
 export default function SiteHeader() {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
+  const showMl = process.env.NEXT_PUBLIC_SHOW_ML_STATUS === '1'
   
   const links = [
     { href: "/bespoke-process", label: "Bespoke" },
@@ -46,6 +47,15 @@ export default function SiteHeader() {
               </Link>
             )
           })}
+          {showMl && (
+            <Link
+              href="/ml-status"
+              className="text-xs inline-flex items-center gap-1 rounded-md border px-2 py-1 text-muted-foreground hover:text-foreground hover:border-foreground/40 transition-colors"
+              aria-label="Machine Learning Engine Status"
+            >
+              <span className="inline-block w-2 h-2 rounded-full bg-emerald-500" /> ML Status
+            </Link>
+          )}
           
           <a
             href="https://wa.me/442081549500"
